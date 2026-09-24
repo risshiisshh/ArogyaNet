@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#82838a", "secondary-fixed": "#8cf4eb", "primary": "#000000", "secondary": "#006a65", "surface-container-high": "#e3e8f7", "inverse-primary": "#c6c6cd", "primary-fixed": "#e2e2e9", "border-hairline": "#E7E9EE", "on-secondary": "#ffffff", "surface-dim": "#d4dae9", "surface-variant": "#dde2f2", "teal-tint": "#E7F7F5", "green-tint": "#E7F7EF", "on-surface-variant": "#46464b", "outline-variant": "#c6c6cb", "surface-container": "#e8eefd", "text-secondary": "#626875", "app-bg": "#EDEEF0", "tertiary-container": "#1e0061", "on-tertiary-fixed-variant": "#4a349a", "on-error-container": "#93000a", "secondary-container": "#8cf4eb", "on-secondary-container": "#00716b", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#8974dc", "blue-tint": "#EAF3FF", "surface-muted": "#F3F4F6", "blue-info": "#4A90E2", "error": "#ba1a1a", "on-tertiary": "#ffffff", "primary-container": "#1a1b21", "on-surface": "#161c26", "on-background": "#161c26", "inverse-surface": "#2b313c", "on-tertiary-fixed": "#1e0061", "on-secondary-fixed-variant": "#00504c", "on-primary-fixed": "#1a1b21", "secondary-fixed-dim": "#6fd7cf", "action-hover": "#252830", "background": "#f9f9ff", "purple-tint": "#EEE8FF", "surface-tint": "#5d5e64", "red-critical": "#E05252", "tertiary": "#000000", "red-tint": "#FDEAEA", "on-primary": "#ffffff", "on-secondary-fixed": "#00201e", "green-healthy": "#2FA86B", "error-container": "#ffdad6", "teal-accent": "#0F8F88", "primary-fixed-dim": "#c6c6cd", "on-primary-fixed-variant": "#45474c", "surface-bright": "#f9f9ff", "purple-accent": "#A994FF", "on-error": "#ffffff", "text-muted": "#8D93A1", "amber-tint": "#FFF2BF", "workspace-surface": "#F8F8FA", "tertiary-fixed-dim": "#cbbeff", "surface-container-highest": "#dde2f2", "tertiary-fixed": "#e7deff", "surface-container-low": "#f0f3ff", "text-primary": "#111318", "amber-accent": "#F2C94C", "inverse-on-surface": "#ecf0ff", "surface": "#f9f9ff", "outline": "#76777b", "card-surface": "#FFFFFF" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.25rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "margin": "3rem" }, fontFamily: { "metric-display": ["Manrope"], "headline-sm": ["Manrope"], "headline-lg-mobile": ["Manrope"], "body-sm": ["Manrope"], "body-md": ["Manrope"], "headline-lg": ["Manrope"], "headline-md": ["Manrope"], "label-md": ["Manrope"], "label-sm": ["Manrope"], "body-lg": ["Manrope"] }, fontSize: { "metric-display": ["56px", { lineHeight: "56px", letterSpacing: "0", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "22px", letterSpacing: "0", fontWeight: "700" }], "headline-lg-mobile": ["28px", { lineHeight: "32px", letterSpacing: "0", fontWeight: "700" }], "body-sm": ["12px", { lineHeight: "18px", letterSpacing: "0", fontWeight: "400" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "400" }], "headline-lg": ["36px", { lineHeight: "38px", letterSpacing: "0", fontWeight: "700" }], "headline-md": ["22px", { lineHeight: "26px", letterSpacing: "0", fontWeight: "700" }], "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "600" }], "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0", fontWeight: "400" }] } } } };</script></head><body class="bg-app-bg min-h-screen text-text-primary antialiased font-body-md text-body-md"><div class="min-h-screen p-space-sm sm:p-space-lg lg:p-margin flex flex-col justify-start items-center"><div class="w-full max-w-[1440px] bg-workspace-surface rounded-lg shadow-[0_18px_45px_rgba(17,19,24,0.08)] flex flex-col min-h-[860px] p-space-md sm:p-space-lg lg:p-space-xl"><header class="w-full flex items-center justify-between gap-space-md mb-space-lg pb-space-sm"><div class="flex items-center gap-space-sm shrink-0"><img alt="ArogyaNet Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6qxmKbLaD7ThdwfscOxdOjF63CQFk_FBeIqnSNpqn7rDO_lxT0UCJmmSVlpc_EoIpSUfqcc9sfkpfGjuy-iNm8N-nQ6wX0TfCYfWhDZCGvGyDZgp3L_KplPcfWO3GNdm2N4KJp-aJS4ma5bFujR8YiYTBFjChaESBC2-4LlojmilI4vw6itMoos0Ic9T0NFb9f2irMN39ETLu_Fe3Fy_o7b9AWwzHYQCe2-eK8V4"/><span class="font-headline-sm text-headline-sm text-text-primary tracking-tight">ArogyaNet</span></div><nav class="hidden xl:flex items-center gap-space-xs bg-surface-muted p-1 rounded-full" data-active-classes="bg-text-primary text-on-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.08)]"><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="dashboard" href="#">Dashboard</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="phc-network" href="#">PHC Network</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="alerts" href="#">Alerts</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="redistribution" href="#">Redistribution</a><a aria-current="page" class="px-space-md py-space-xs rounded-full transition-colors bg-text-primary text-on-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.08)]" data-path="simulator" href="#">Simulator</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="brics-network" href="#">BRICS Network</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="assistant" href="#">Assistant</a></nav><div class="flex items-center gap-space-xs sm:gap-space-sm shrink-0"><button aria-label="Search" class="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">search</span></button><button aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-critical"></span></button><button aria-label="Sync / Refresh" class="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">sync</span></button><button aria-label="Display settings" class="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">light_mode</span></button><div class="flex items-center gap-space-xs pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(17,19,24,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5mhhRZ0gF5xSOontnz9jwH_t1lv-0guZjwPTjifeh6wI_efFycjsDLO6421OtZAVJizMcLmfJ7k19K_B1HGwYPbiO-bKdMFoBwLQYYuKaSUyRJkA_SkernAocDklr7fpTWuXOmXT34NMpXwtkmvaBbEaGSJw4icD89_VC4jGYu1XcwN81MYGzPc5D-hf33FnaKb2_C00-6zZPlu2ySE0y-Pzl0bEzHCbKhH9Eb2U"/></div></div></header><main class="flex-1 w-full"><div class="flex flex-col w-full gap-space-lg">
+<!-- Page Header Cluster -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-space-xs mb-1">
+<span class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Emergency Scenario Simulator</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary">
+        Model how a sudden demand surge would affect PHC resources before it reaches patients.
+      </p>
+</div>
+<div class="flex items-center gap-space-xs self-start sm:self-center">
+<span class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-card-surface text-text-secondary font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-base text-teal-accent">shield</span>
+        Simulation Sandbox · Read-only
+      </span>
+</div>
+</div>
+<!-- Simulation Active Banner -->
+<div class="w-full bg-amber-tint rounded-lg p-space-md flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="relative flex h-3 w-3 shrink-0">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-accent opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-amber-accent"></span>
+</span>
+<div class="flex flex-wrap items-center gap-x-space-sm gap-y-1">
+<span class="font-headline-sm text-headline-sm text-text-primary">
+          Simulation active: Disease Outbreak (Severe) · Sitapur District
+        </span>
+<span class="px-space-sm py-0.5 rounded-full bg-card-surface font-label-sm text-label-sm text-text-primary">
+          Real-time projection model
+        </span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm text-text-secondary font-body-sm text-body-sm self-end md:self-auto shrink-0">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>Generated at 10:28 IST</span>
+</div>
+</div>
+<!-- Control & Interactive Parameter Panel -->
+<div class="w-full bg-card-surface rounded-lg p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Scenario Selector -->
+<div class="flex flex-col gap-1.5 flex-1 max-w-md">
+<label class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Scenario Archetype</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-red-critical text-xl pointer-events-none">emergency</span>
+<select aria-label="Select Scenario Archetype" class="w-full h-11 pl-11 pr-10 rounded-xl bg-workspace-surface font-label-md text-label-md text-text-primary appearance-none cursor-pointer focus:outline-none">
+<option selected="">Disease Outbreak — Sitapur District</option>
+<option>Monsoon Surge &amp; Vector Influx — Terai Belt</option>
+<option>National Supply Chain Route Disruption</option>
+<option>Heatwave Induced Shock — Central Plains</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-md text-text-secondary text-xl pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Intensity Control -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Surge Severity &amp; Strain</label>
+<div class="inline-flex bg-surface-muted p-1 rounded-full items-center">
+<button class="px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-text-secondary hover:text-text-primary transition-colors" type="button">
+            Mild (+30%)
+          </button>
+<button class="px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-text-secondary hover:text-text-primary transition-colors" type="button">
+            Moderate (+100%)
+          </button>
+<button class="px-space-md py-1.5 rounded-full bg-amber-accent text-text-primary font-headline-sm text-label-sm shadow-sm transition-transform active:scale-95" type="button">
+            Severe (+200%)
+          </button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-sm pt-4 lg:pt-0 self-start lg:self-end">
+<button class="h-11 px-space-lg rounded-full bg-text-primary hover:bg-action-hover text-on-primary font-label-md text-label-md flex items-center gap-space-xs transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-lg">play_arrow</span>
+          Run Simulation
+        </button>
+<button class="h-11 px-space-md rounded-full bg-surface-muted hover:bg-card-surface text-text-secondary hover:text-text-primary font-label-md text-label-md flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-lg">restart_alt</span>
+          Reset to live data
+        </button>
+</div>
+</div>
+<!-- Parameter Badges & Helper Text Strip -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs border-t-0">
+<div class="flex items-center gap-2 text-text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-teal-accent text-base">info</span>
+<span>Simulates a 3x rise in consumption for affected medicines across the district.</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="px-space-sm py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+          +200% burn acceleration
+        </span>
+<span class="px-space-sm py-1 rounded-full bg-surface-muted text-text-secondary font-label-sm text-label-sm">
+          Target cohort: 18 PHCs
+        </span>
+<span class="px-space-sm py-1 rounded-full bg-surface-muted text-text-secondary font-label-sm text-label-sm">
+          Forecast horizon: 7 days
+        </span>
+</div>
+</div>
+</div>
+<!-- Before / After Comparison Grid -->
+<div class="w-full flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-text-primary">Network Shift Assessment</span>
+<span class="font-body-sm text-body-sm text-text-muted">Comparing live telemetry against 72-hour simulated trajectory</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-stretch">
+<!-- Left Column: Current Live Baseline -->
+<div class="lg:col-span-5 bg-card-surface rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div>
+<div class="flex items-start justify-between gap-space-xs mb-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider block">Baseline State</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Current Network (Live)</h3>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-healthy"></span>
+              15 Stabilized
+            </span>
+</div>
+<div class="flex items-center gap-2 mb-space-md">
+<span class="px-space-sm py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">1 critical</span>
+<span class="px-space-sm py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">2 need attention</span>
+<span class="px-space-sm py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">15 stabilized</span>
+</div>
+<!-- PHC Mini Cards -->
+<div class="flex flex-col gap-2">
+<!-- Maholi -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-green-healthy shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Maholi PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">360 ORS surplus · 42 beds open</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">Healthy</span>
+</div>
+<!-- Khairabad -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-green-healthy shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Khairabad PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">28d safe buffer on antibiotics</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">Healthy</span>
+</div>
+<!-- Hargaon -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-green-healthy shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Hargaon PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">600 diagnostic strips buffered</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">Healthy</span>
+</div>
+<!-- Biswan -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-accent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Biswan PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Insulin nearing reorder point (4.5d)</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">Attention</span>
+</div>
+<!-- Laharpur -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-accent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Laharpur PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Bed occupancy rising at 78%</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">Attention</span>
+</div>
+<!-- Rampur -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-red-critical shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Rampur PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">ORS stockout in 2.5d at current rate</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">Critical</span>
+</div>
+</div>
+</div>
+<!-- Resilience Mini Gauge -->
+<div class="p-space-md rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">District Resilience Index</span>
+<span class="font-headline-sm text-headline-sm text-text-primary">84% Capacity</span>
+<span class="font-body-sm text-body-sm text-green-healthy">Normal operating limits</span>
+</div>
+<div class="w-16 h-16 relative flex items-center justify-center">
+<svg class="w-16 h-16 -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-muted" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-green-healthy" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="84, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="absolute font-label-md text-label-md text-text-primary">84%</span>
+</div>
+</div>
+</div>
+<!-- Center Divider / Transformation Indicator -->
+<div class="lg:col-span-2 flex flex-col items-center justify-center p-space-md rounded-lg bg-surface-muted text-center gap-space-sm">
+<div class="w-12 h-12 rounded-full bg-card-surface flex items-center justify-center text-text-primary shadow-sm">
+<span class="material-symbols-outlined text-2xl">trending_down</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Severe Outbreak Impact</span>
+<span class="font-body-sm text-body-sm text-red-critical font-semibold">3x Acceleration Shift</span>
+</div>
+<div class="w-full flex items-center justify-center gap-1 text-text-muted">
+<span class="material-symbols-outlined text-sm">east</span>
+<span class="material-symbols-outlined text-sm">east</span>
+<span class="material-symbols-outlined text-sm">east</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary max-w-[140px]">
+          Without intervention, failure cascaded in 72 hours
+        </p>
+</div>
+<!-- Right Column: Simulated Network -->
+<div class="lg:col-span-5 bg-card-surface rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div>
+<div class="flex items-start justify-between gap-space-xs mb-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-red-critical uppercase tracking-wider block">Simulated Outcome</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Severe Outbreak Model</h3>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-red-critical animate-pulse"></span>
+              6 Critical
+            </span>
+</div>
+<div class="flex items-center gap-2 mb-space-md">
+<span class="px-space-sm py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">6 critical</span>
+<span class="px-space-sm py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">4 need attention</span>
+<span class="px-space-sm py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">8 stabilized</span>
+</div>
+<!-- PHC Simulated Mini Cards -->
+<div class="flex flex-col gap-2">
+<!-- Rampur PHC -->
+<div class="p-space-sm rounded-xl bg-red-tint/40 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-red-critical shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Rampur PHC</span>
+<span class="font-body-sm text-body-sm text-red-critical font-medium">Stockout imminent in &lt;18 hours</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">Critical</span>
+</div>
+<!-- Biswan PHC -->
+<div class="p-space-sm rounded-xl bg-red-tint/40 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-red-critical shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Biswan PHC</span>
+<span class="font-body-sm text-body-sm text-red-critical font-medium">Zero insulin reserves in 1.2 days</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">Critical</span>
+</div>
+<!-- Laharpur PHC -->
+<div class="p-space-sm rounded-xl bg-red-tint/40 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-red-critical shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Laharpur PHC</span>
+<span class="font-body-sm text-body-sm text-red-critical font-medium">Bed capacity 100% breached (134%)</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">Critical</span>
+</div>
+<!-- Khairabad PHC -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-accent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Khairabad PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Buffer compressed from 28d to 4 days</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">Attention</span>
+</div>
+<!-- Hargaon PHC -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-accent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Hargaon PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Antibiotic burn rate doubled</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">Attention</span>
+</div>
+<!-- Maholi PHC -->
+<div class="p-space-sm rounded-xl bg-workspace-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-green-healthy shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-text-primary block">Maholi PHC</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Remains buffered with redistributable surplus</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">Healthy</span>
+</div>
+</div>
+</div>
+<!-- Resilience Degraded Gauge -->
+<div class="p-space-md rounded-xl bg-red-tint/30 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-red-critical uppercase">District Resilience Index</span>
+<span class="font-headline-sm text-headline-sm text-red-critical">38% Capacity</span>
+<span class="font-body-sm text-body-sm text-red-critical font-medium">-46% severe degradation</span>
+</div>
+<div class="w-16 h-16 relative flex items-center justify-center">
+<svg class="w-16 h-16 -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-muted" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-red-critical" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="38, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="absolute font-label-md text-label-md text-red-critical">38%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Response & Mitigation Strategy Card -->
+<div class="w-full bg-card-surface rounded-lg p-space-lg shadow-sm flex flex-col gap-space-md relative overflow-hidden">
+<!-- Subtle ambient AI gradient hint -->
+<div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-teal-tint blur-3xl pointer-events-none"></div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm relative z-10">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-teal-tint flex items-center justify-center text-teal-accent">
+<span class="material-symbols-outlined text-2xl">auto_awesome</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-teal-accent uppercase tracking-wider block">Automated Prescription Engine</span>
+<h2 class="font-headline-md text-headline-md text-text-primary">ArogyaNet Predictive Response &amp; Mitigation</h2>
+</div>
+</div>
+<span class="px-space-md py-1 rounded-full bg-teal-tint text-teal-accent font-label-sm text-label-sm self-start sm:self-center">
+        3 High-Confidence Directives
+      </span>
+</div>
+<!-- 3 Structured Insights -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md relative z-10">
+<!-- Insight 1 -->
+<div class="p-space-md rounded-xl bg-workspace-surface flex flex-col justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-7 h-7 rounded-full bg-red-tint text-red-critical flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-base">warning</span>
+</span>
+<span class="font-label-md text-label-md text-text-primary">Shortage Surge Detected</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary mb-3">
+            4 new critical alerts generated across district nodes, led by acute ORS sachets and Amoxicillin syrup burn.
+          </p>
+</div>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-muted text-text-primary font-label-sm text-label-sm">Rampur</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-muted text-text-primary font-label-sm text-label-sm">Biswan</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-muted text-text-primary font-label-sm text-label-sm">Laharpur</span>
+</div>
+</div>
+<!-- Insight 2 -->
+<div class="p-space-md rounded-xl bg-workspace-surface flex flex-col justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-7 h-7 rounded-full bg-teal-tint text-teal-accent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-base">swap_horizontal_circle</span>
+</span>
+<span class="font-label-md text-label-md text-text-primary">Targeted Reroutes</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary mb-2">
+            2 additional emergency redistribution transfers recommended to prevent zero-inventory lock.
+          </p>
+<div class="space-y-1">
+<div class="text-text-primary font-body-sm text-body-sm flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-teal-accent"></span>
+<span><strong>Maholi → Rampur:</strong> 180 ORS packs</span>
+</div>
+<div class="text-text-primary font-body-sm text-body-sm flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-teal-accent"></span>
+<span><strong>Khairabad → Biswan:</strong> 40 vials Insulin</span>
+</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-teal-accent">Dispatch SLA: Under 4 hours</span>
+</div>
+<!-- Insight 3: Metric Highlight -->
+<div class="p-space-md rounded-xl bg-workspace-surface flex flex-col justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-7 h-7 rounded-full bg-amber-tint text-text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-base">hourglass_bottom</span>
+</span>
+<span class="font-label-md text-label-md text-text-primary">Coverage Collapse Risk</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary">
+            Average network stock cover drops precipitously without preemptive dispatch protocol.
+          </p>
+</div>
+<div class="flex items-baseline gap-2 pt-2">
+<span class="font-metric-display text-headline-lg text-text-primary">11d</span>
+<span class="material-symbols-outlined text-red-critical text-xl">arrow_forward</span>
+<span class="font-metric-display text-headline-lg text-red-critical">3d</span>
+<span class="font-body-sm text-body-sm text-text-muted ml-auto">Mean district buffer</span>
+</div>
+</div>
+</div>
+<!-- Actions Footer inside Card -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-sm relative z-10">
+<div class="flex items-center gap-2 text-text-muted font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-base">verified</span>
+<span>Redistribution route optimized for minimal inter-facility transit time (Sitapur arterial network)</span>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial h-11 px-space-md rounded-full bg-surface-muted hover:bg-card-surface text-text-primary font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-base">picture_as_pdf</span>
+          Export scenario forecast (PDF)
+        </button>
+<button class="flex-1 sm:flex-initial h-11 px-space-lg rounded-full bg-text-primary hover:bg-action-hover text-on-primary font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all shadow-sm" type="button">
+<span>View updated redistribution plan</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Reassuring Operational & Compliance Boundary Banner -->
+<div class="w-full bg-card-surface/70 rounded-lg p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm shadow-sm">
+<div class="flex items-center gap-space-sm text-text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-text-muted text-xl shrink-0">lock</span>
+<span>
+        Simulated data does not affect live PHC records. All scenario models run in a sandboxed analytical layer.
+      </span>
+</div>
+<span class="px-space-md py-1 rounded-full bg-workspace-surface text-text-muted font-label-sm text-label-sm shrink-0">
+      Local Sovereign Sandbox · Sitapur District Health Authority
+    </span>
+</div>
+</div></main><footer class="w-full mt-space-xl pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm text-text-muted font-body-sm text-body-sm"><div>© 2025 ArogyaNet National Public Health Resilience Infrastructure. All rights reserved.</div><div class="flex items-center gap-space-md"><span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-healthy"></span> Telemetry Active</span><span>District Grid Status: Synced</span></div></footer></div></div></body></html>

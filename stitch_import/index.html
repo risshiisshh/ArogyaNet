@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArogyaNet Design System & Screen Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #EDEEF0;
+      --surface-white: #FFFFFF;
+      --surface-panel: #F8F8FA;
+      --surface-muted: #F3F4F6;
+      --text-main: #111318;
+      --text-muted: #626875;
+      --text-subtle: #8D93A1;
+      --border-subtle: #E7E9EE;
+      --border-active: #111318;
+      
+      --accent-teal: #0F8F88;
+      --accent-teal-tint: #E7F7F5;
+      --accent-purple: #A994FF;
+      --accent-purple-tint: #EEE8FF;
+      --accent-amber: #F2C94C;
+      --accent-amber-tint: #FFF2BF;
+      --accent-red: #E05252;
+      --accent-red-tint: #FDEAEA;
+      --accent-green: #2FA86B;
+      --accent-green-tint: #E7F7EF;
+      --accent-blue: #4A90E2;
+      --accent-blue-tint: #EAF3FF;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+
+      --shadow-sm: 0 2px 8px rgba(17, 19, 24, 0.04);
+      --shadow-md: 0 10px 30px rgba(17, 19, 24, 0.06);
+      --shadow-lg: 0 20px 45px rgba(17, 19, 24, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Bar */
+    header {
+      background: var(--surface-white);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      object-fit: contain;
+      background: var(--surface-panel);
+      padding: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .brand-info h1 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-teal-tint);
+      color: var(--accent-teal);
+    }
+
+    .brand-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-tabs {
+      display: flex;
+      background: var(--surface-muted);
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      gap: 4px;
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn.active {
+      background: var(--text-main);
+      color: var(--surface-white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-panel);
+      padding: 5px 12px 5px 6px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .user-pill img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      padding: 24px 32px;
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Screens Grid */
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    .screen-card {
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .screen-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #cbd2dc;
+    }
+
+    .thumbnail-wrap {
+      width: 100%;
+      height: 220px;
+      background: var(--surface-muted);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .thumbnail-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease;
+    }
+
+    .screen-card:hover .thumbnail-wrap img {
+      transform: scale(1.03);
+    }
+
+    .card-body {
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: var(--text-main);
+      color: var(--surface-white);
+      border: none;
+      padding: 10px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: #252830;
+    }
+
+    .btn-secondary {
+      background: var(--surface-panel);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-muted);
+      border-color: #cbd2dc;
+    }
+
+    /* Live Preview Section */
+    .preview-layout {
+      display: flex;
+      gap: 24px;
+      height: calc(100vh - 150px);
+      min-height: 600px;
+    }
+
+    .preview-sidebar {
+      width: 320px;
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .preview-item {
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .preview-item:hover {
+      background: var(--surface-muted);
+      color: var(--text-main);
+    }
+
+    .preview-item.active {
+      background: var(--surface-panel);
+      color: var(--text-main);
+      border-color: var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
+    }
+
+    .preview-stage {
+      flex: 1;
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stage-header {
+      padding: 12px 20px;
+      background: var(--surface-panel);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stage-title {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stage-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .stage-controls a, .stage-controls button {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-white);
+      color: var(--text-main);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .iframe-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #fafafa;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Tokens & Docs */
+    .tokens-container {
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .token-section {
+      margin-bottom: 40px;
+    }
+
+    .token-section h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 16px;
+    }
+
+    .color-card {
+      background: var(--surface-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .color-swatch {
+      width: 100%;
+      height: 50px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .color-name {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .color-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .doc-pre {
+      background: var(--surface-muted);
+      border: 1px solid var(--border-subtle);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: #1a1b21;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--text-main);
+      color: var(--surface-white);
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="screenshots/arogyanet_logo.png" alt="ArogyaNet Logo" class="brand-logo" onerror="this.style.display='none'">
+      <div class="brand-info">
+        <h1>ArogyaNet <span class="badge">Google Stitch Design System</span></h1>
+        <p>Public Health Operations &amp; Resource Resilience Platform</p>
+      </div>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-btn active" onclick="switchTab('screens')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        Screens (8)
+      </button>
+      <button class="nav-btn" onclick="switchTab('preview')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Interactive Preview
+      </button>
+      <button class="nav-btn" onclick="switchTab('tokens')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+        Design Tokens
+      </button>
+      <button class="nav-btn" onclick="switchTab('spec')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        design.md
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <div class="user-pill">
+        <img src="screenshots/user_avatar.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=District+Admin&background=111318&color=fff'">
+        <span>Sitapur District Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- TAB 1: SCREENS GALLERY -->
+    <section id="tab-screens" class="tab-content active">
+      <div class="screens-grid">
+
+        <!-- ArogyaNet Dashboard -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/arogyanet_dashboard.png" alt="ArogyaNet Dashboard" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">ArogyaNet Dashboard</h3>
+              <p class="card-meta">Primary District Health Operations Command Center</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/arogyanet_dashboard.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/arogyanet_dashboard.html', 'ArogyaNet Dashboard')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Early Warnings -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/early_warnings.png" alt="Early Warnings" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">Early Warnings</h3>
+              <p class="card-meta">Predictive AI Shortage &amp; Stock-Out Alerts</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/early_warnings.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/early_warnings.html', 'Early Warnings')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rampur PHC Detail -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/rampur_phc_detail.png" alt="Rampur PHC Detail" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">Rampur PHC Detail</h3>
+              <p class="card-meta">Facility Deep-Dive: Beds, Medicine, &amp; Staff Attendance</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/rampur_phc_detail.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/rampur_phc_detail.html', 'Rampur PHC Detail')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Redistribution Recommendations -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/redistribution_recommendations.png" alt="Redistribution Recommendations" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">Redistribution Recommendations</h3>
+              <p class="card-meta">AI-Assisted Inter-Facility Stock Balancing</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/redistribution_recommendations.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/redistribution_recommendations.html', 'Redistribution Recommendations')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emergency Scenario Simulator -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/emergency_scenario_simulator.png" alt="Emergency Scenario Simulator" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">Emergency Scenario Simulator</h3>
+              <p class="card-meta">Simulate Epidemic Spikes &amp; Supply Chain Disruptions</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/emergency_scenario_simulator.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/emergency_scenario_simulator.html', 'Emergency Scenario Simulator')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRICS Network Comparison -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/brics_network_comparison.png" alt="BRICS Network Comparison" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">BRICS Network Comparison</h3>
+              <p class="card-meta">Cross-Border Interoperability (eThekwini, South Africa)</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/brics_network_comparison.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/brics_network_comparison.html', 'BRICS Network Comparison')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Assistant -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap">
+            <img src="screenshots/admin_assistant.png" alt="Admin Assistant" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">Admin Assistant</h3>
+              <p class="card-meta">Conversational AI Co-Pilot for Resource Routing</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/admin_assistant.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/admin_assistant.html', 'Admin Assistant')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Platform Hub -->
+        <div class="screen-card">
+          <div class="thumbnail-wrap" style="background: #111318;">
+            <img src="screenshots/arogyanet_logo.png" alt="Platform Hub" style="width: 90px; height: 90px; object-fit: contain;">
+          </div>
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">Platform Hub Overview</h3>
+              <p class="card-meta">Architecture &amp; System Integration View</p>
+            </div>
+            <div class="card-actions">
+              <a href="screens/arogyanet_health_network_resilience_platform.html" target="_blank" class="btn-primary">Open Fullscreen</a>
+              <button onclick="previewScreen('screens/arogyanet_health_network_resilience_platform.html', 'Health Network Resilience Platform')" class="btn-secondary">Preview</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: INTERACTIVE PREVIEW -->
+    <section id="tab-preview" class="tab-content">
+      <div class="preview-layout">
+        <div class="preview-sidebar">
+          <div class="preview-item active" onclick="loadIframe('screens/arogyanet_dashboard.html', 'ArogyaNet Dashboard', this)">
+            <span>ArogyaNet Dashboard</span>
+            <span class="badge">Live</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/early_warnings.html', 'Early Warnings', this)">
+            <span>Early Warnings</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/rampur_phc_detail.html', 'Rampur PHC Detail', this)">
+            <span>Rampur PHC Detail</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/redistribution_recommendations.html', 'Redistribution Recommendations', this)">
+            <span>Redistribution</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/emergency_scenario_simulator.html', 'Emergency Scenario Simulator', this)">
+            <span>Simulator</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/brics_network_comparison.html', 'BRICS Network Comparison', this)">
+            <span>BRICS Network</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/admin_assistant.html', 'Admin Assistant', this)">
+            <span>Admin Assistant</span>
+          </div>
+          <div class="preview-item" onclick="loadIframe('screens/arogyanet_health_network_resilience_platform.html', 'Platform Hub', this)">
+            <span>Platform Hub</span>
+          </div>
+        </div>
+
+        <div class="preview-stage">
+          <div class="stage-header">
+            <div class="stage-title" id="current-screen-title">
+              <span>ArogyaNet Dashboard</span>
+            </div>
+            <div class="stage-controls">
+              <a id="btn-open-ext" href="screens/arogyanet_dashboard.html" target="_blank">Open in New Tab &nearr;</a>
+            </div>
+          </div>
+          <div class="iframe-container">
+            <iframe id="preview-frame" src="screens/arogyanet_dashboard.html"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DESIGN TOKENS -->
+    <section id="tab-tokens" class="tab-content">
+      <div class="tokens-container">
+        
+        <div class="token-section">
+          <h2>Core Palette &amp; Operational Tokens</h2>
+          <div class="palette-grid">
+            <div class="color-card">
+              <div class="color-swatch" style="background: #111318;"></div>
+              <div class="color-name">Text Primary / Action</div>
+              <div class="color-val" onclick="copyHex('#111318')">#111318 <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #0F8F88;"></div>
+              <div class="color-name">Teal AI Accent</div>
+              <div class="color-val" onclick="copyHex('#0F8F88')">#0F8F88 <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #E7F7F5;"></div>
+              <div class="color-name">Teal Tint</div>
+              <div class="color-val" onclick="copyHex('#E7F7F5')">#E7F7F5 <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #E05252;"></div>
+              <div class="color-name">Red Critical</div>
+              <div class="color-val" onclick="copyHex('#E05252')">#E05252 <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #FDEAEA;"></div>
+              <div class="color-name">Red Critical Tint</div>
+              <div class="color-val" onclick="copyHex('#FDEAEA')">#FDEAEA <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #F2C94C;"></div>
+              <div class="color-name">Amber Attention</div>
+              <div class="color-val" onclick="copyHex('#F2C94C')">#F2C94C <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #FFF2BF;"></div>
+              <div class="color-name">Amber Tint</div>
+              <div class="color-val" onclick="copyHex('#FFF2BF')">#FFF2BF <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #2FA86B;"></div>
+              <div class="color-name">Green Healthy</div>
+              <div class="color-val" onclick="copyHex('#2FA86B')">#2FA86B <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #E7F7EF;"></div>
+              <div class="color-name">Green Tint</div>
+              <div class="color-val" onclick="copyHex('#E7F7EF')">#E7F7EF <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #A994FF;"></div>
+              <div class="color-name">Purple Accent</div>
+              <div class="color-val" onclick="copyHex('#A994FF')">#A994FF <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #EDEEF0;"></div>
+              <div class="color-name">App Canvas Background</div>
+              <div class="color-val" onclick="copyHex('#EDEEF0')">#EDEEF0 <span>📋</span></div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #ddd;"></div>
+              <div class="color-name">Card Surface</div>
+              <div class="color-val" onclick="copyHex('#FFFFFF')">#FFFFFF <span>📋</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="token-section">
+          <h2>JSON Tokens Definition</h2>
+          <div style="margin-bottom: 12px;">
+            <button class="btn-secondary" onclick="loadRawTokens()">Load tokens.json</button>
+          </div>
+          <pre class="doc-pre" id="tokens-json-pre">Loading tokens...</pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 4: SPECIFICATION -->
+    <section id="tab-spec" class="tab-content">
+      <div class="tokens-container">
+        <div class="token-section">
+          <h2>Stitch Design System Specification (design.md)</h2>
+          <pre class="doc-pre" id="design-md-pre">Loading design.md...</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast">Hex copied to clipboard!</div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'spec') loadDesignMd();
+      if (tabId === 'tokens') loadRawTokens();
+    }
+
+    function previewScreen(url, title) {
+      document.querySelectorAll('.nav-btn')[1].click();
+      loadIframe(url, title);
+    }
+
+    function loadIframe(url, title, el) {
+      const frame = document.getElementById('preview-frame');
+      const titleEl = document.getElementById('current-screen-title');
+      const extBtn = document.getElementById('btn-open-ext');
+      
+      frame.src = url;
+      titleEl.innerText = title;
+      extBtn.href = url;
+
+      if (el) {
+        document.querySelectorAll('.preview-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+      }
+    }
+
+    function copyHex(hex) {
+      navigator.clipboard.writeText(hex);
+      const toast = document.getElementById('toast');
+      toast.innerText = 'Copied ' + hex + ' to clipboard';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    async function loadDesignMd() {
+      try {
+        const resp = await fetch('design_system/design.md');
+        const text = await resp.text();
+        document.getElementById('design-md-pre').innerText = text;
+      } catch (e) {
+        document.getElementById('design-md-pre').innerText = 'Error loading design.md';
+      }
+    }
+
+    async function loadRawTokens() {
+      try {
+        const resp = await fetch('design_system/tokens.json');
+        const data = await resp.json();
+        document.getElementById('tokens-json-pre').innerText = JSON.stringify(data, null, 2);
+      } catch (e) {
+        document.getElementById('tokens-json-pre').innerText = 'Error loading tokens.json';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadDesignMd();
+      loadRawTokens();
+    });
+  </script>
+</body>
+</html>

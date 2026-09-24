@@ -1,0 +1,102 @@
+[
+  {
+    "title": "Emergency Scenario Simulator",
+    "screenId": "7e2e0fd40d3844c7904721ea18e6535f",
+    "slug": "emergency_scenario_simulator",
+    "htmlFile": "screens/emergency_scenario_simulator.html",
+    "screenshotFile": "screenshots/emergency_scenario_simulator.png",
+    "width": "2560",
+    "height": "3584",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "ArogyaNet Dashboard",
+    "screenId": "46b14f26a121425bb4ab261fa7aff16b",
+    "slug": "arogyanet_dashboard",
+    "htmlFile": "screens/arogyanet_dashboard.html",
+    "screenshotFile": "screenshots/arogyanet_dashboard.png",
+    "width": "2560",
+    "height": "2228",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "BRICS Network Comparison",
+    "screenId": "23d49a1014a84774a5553967d6e98f2f",
+    "slug": "brics_network_comparison",
+    "htmlFile": "screens/brics_network_comparison.html",
+    "screenshotFile": "screenshots/brics_network_comparison.png",
+    "width": "2560",
+    "height": "3566",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "Rampur PHC Detail",
+    "screenId": "96c462fa37514a90892fe7c919dcf499",
+    "slug": "rampur_phc_detail",
+    "htmlFile": "screens/rampur_phc_detail.html",
+    "screenshotFile": "screenshots/rampur_phc_detail.png",
+    "width": "2560",
+    "height": "3582",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "ArogyaNet Logo",
+    "screenId": "d75dd1a984c34e2e8cd26ea201130779",
+    "slug": "arogyanet_logo",
+    "htmlFile": null,
+    "screenshotFile": "screenshots/arogyanet_logo.png",
+    "width": "1024",
+    "height": "1024",
+    "deviceType": null
+  },
+  {
+    "title": "Redistribution Recommendations",
+    "screenId": "d42e3bf3b12e44b29564c65c3974514b",
+    "slug": "redistribution_recommendations",
+    "htmlFile": "screens/redistribution_recommendations.html",
+    "screenshotFile": "screenshots/redistribution_recommendations.png",
+    "width": "2560",
+    "height": "3692",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "Admin Assistant",
+    "screenId": "cf256b57956145febe1dbb02d923d250",
+    "slug": "admin_assistant",
+    "htmlFile": "screens/admin_assistant.html",
+    "screenshotFile": "screenshots/admin_assistant.png",
+    "width": "2560",
+    "height": "2968",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "Early Warnings",
+    "screenId": "49928435760e4cb2896d7c8269bb3b53",
+    "slug": "early_warnings",
+    "htmlFile": "screens/early_warnings.html",
+    "screenshotFile": "screenshots/early_warnings.png",
+    "width": "2560",
+    "height": "3432",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "ArogyaNet Health Network Resilience Platform",
+    "screenId": "d56370ac0a4a4689bf6632bfe7f5cf55",
+    "slug": "arogyanet_health_network_resilience_platform",
+    "htmlFile": "screens/arogyanet_health_network_resilience_platform.html",
+    "screenshotFile": null,
+    "width": "1280",
+    "height": "1024",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "title": "arogyanet_design.md",
+    "screenId": "8457343436343722203",
+    "slug": "arogyanet_design_md",
+    "htmlFile": "screens/arogyanet_design_md.html",
+    "screenshotFile": null,
+    "width": "780",
+    "height": "1768",
+    "deviceType": null
+  }
+]

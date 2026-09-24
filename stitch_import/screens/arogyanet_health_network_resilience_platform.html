@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#82838a", "secondary-fixed": "#8cf4eb", "primary": "#000000", "secondary": "#006a65", "surface-container-high": "#e3e8f7", "inverse-primary": "#c6c6cd", "primary-fixed": "#e2e2e9", "border-hairline": "#E7E9EE", "on-secondary": "#ffffff", "surface-dim": "#d4dae9", "surface-variant": "#dde2f2", "teal-tint": "#E7F7F5", "green-tint": "#E7F7EF", "on-surface-variant": "#46464b", "outline-variant": "#c6c6cb", "surface-container": "#e8eefd", "text-secondary": "#626875", "app-bg": "#EDEEF0", "tertiary-container": "#1e0061", "on-tertiary-fixed-variant": "#4a349a", "on-error-container": "#93000a", "secondary-container": "#8cf4eb", "on-secondary-container": "#00716b", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#8974dc", "blue-tint": "#EAF3FF", "surface-muted": "#F3F4F6", "blue-info": "#4A90E2", "error": "#ba1a1a", "on-tertiary": "#ffffff", "primary-container": "#1a1b21", "on-surface": "#161c26", "on-background": "#161c26", "inverse-surface": "#2b313c", "on-tertiary-fixed": "#1e0061", "on-secondary-fixed-variant": "#00504c", "on-primary-fixed": "#1a1b21", "secondary-fixed-dim": "#6fd7cf", "action-hover": "#252830", "background": "#f9f9ff", "purple-tint": "#EEE8FF", "surface-tint": "#5d5e64", "red-critical": "#E05252", "tertiary": "#000000", "red-tint": "#FDEAEA", "on-primary": "#ffffff", "on-secondary-fixed": "#00201e", "green-healthy": "#2FA86B", "error-container": "#ffdad6", "teal-accent": "#0F8F88", "primary-fixed-dim": "#c6c6cd", "on-primary-fixed-variant": "#45474c", "surface-bright": "#f9f9ff", "purple-accent": "#A994FF", "on-error": "#ffffff", "text-muted": "#8D93A1", "amber-tint": "#FFF2BF", "workspace-surface": "#F8F8FA", "tertiary-fixed-dim": "#cbbeff", "surface-container-highest": "#dde2f2", "tertiary-fixed": "#e7deff", "surface-container-low": "#f0f3ff", "text-primary": "#111318", "amber-accent": "#F2C94C", "inverse-on-surface": "#ecf0ff", "surface": "#f9f9ff", "outline": "#76777b", "card-surface": "#FFFFFF" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.25rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "margin": "3rem" }, fontFamily: { "metric-display": ["Manrope"], "headline-sm": ["Manrope"], "headline-lg-mobile": ["Manrope"], "body-sm": ["Manrope"], "body-md": ["Manrope"], "headline-lg": ["Manrope"], "headline-md": ["Manrope"], "label-md": ["Manrope"], "label-sm": ["Manrope"], "body-lg": ["Manrope"] }, fontSize: { "metric-display": ["56px", { lineHeight: "56px", letterSpacing: "0", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "22px", letterSpacing: "0", fontWeight: "700" }], "headline-lg-mobile": ["28px", { lineHeight: "32px", letterSpacing: "0", fontWeight: "700" }], "body-sm": ["12px", { lineHeight: "18px", letterSpacing: "0", fontWeight: "400" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "400" }], "headline-lg": ["36px", { lineHeight: "38px", letterSpacing: "0", fontWeight: "700" }], "headline-md": ["22px", { lineHeight: "26px", letterSpacing: "0", fontWeight: "700" }], "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "600" }], "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0", fontWeight: "400" }] } } } };</script></head><body class="bg-app-bg min-h-screen text-text-primary antialiased font-body-md text-body-md"><div class="min-h-screen p-space-sm sm:p-space-lg lg:p-margin flex flex-col justify-start items-center"><div class="w-full max-w-[1440px] bg-workspace-surface rounded-lg shadow-[0_18px_45px_rgba(17,19,24,0.08)] flex flex-col min-h-[860px] p-space-md sm:p-space-lg lg:p-space-xl"><header class="w-full flex items-center justify-between gap-space-md mb-space-lg pb-space-sm"><div class="flex items-center gap-space-sm shrink-0"><img alt="ArogyaNet Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6qxmKbLaD7ThdwfscOxdOjF63CQFk_FBeIqnSNpqn7rDO_lxT0UCJmmSVlpc_EoIpSUfqcc9sfkpfGjuy-iNm8N-nQ6wX0TfCYfWhDZCGvGyDZgp3L_KplPcfWO3GNdm2N4KJp-aJS4ma5bFujR8YiYTBFjChaESBC2-4LlojmilI4vw6itMoos0Ic9T0NFb9f2irMN39ETLu_Fe3Fy_o7b9AWwzHYQCe2-eK8V4"/><span class="font-headline-sm text-headline-sm text-text-primary tracking-tight">ArogyaNet</span></div><nav class="hidden xl:flex items-center gap-space-xs bg-surface-muted p-1 rounded-full" data-active-classes="bg-text-primary text-on-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.08)]"><a aria-current="page" class="px-space-md py-space-xs rounded-full transition-colors bg-text-primary text-on-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.08)]" data-path="dashboard" href="#">Dashboard</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="phc-network" href="#">PHC Network</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="alerts" href="#">Alerts</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="redistribution" href="#">Redistribution</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="brics-network" href="#">BRICS Network</a><a class="px-space-md py-space-xs rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-card-surface transition-colors" data-path="assistant" href="#">Assistant</a></nav><div class="flex items-center gap-space-xs sm:gap-space-sm shrink-0"><button aria-label="Search" class="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">search</span></button><button aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-critical"></span></button><button aria-label="Sync / Refresh" class="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">sync</span></button><button aria-label="Display settings" class="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]" type="button"><span class="material-symbols-outlined text-lg">light_mode</span></button><div class="flex items-center gap-space-xs pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(17,19,24,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5mhhRZ0gF5xSOontnz9jwH_t1lv-0guZjwPTjifeh6wI_efFycjsDLO6421OtZAVJizMcLmfJ7k19K_B1HGwYPbiO-bKdMFoBwLQYYuKaSUyRJkA_SkernAocDklr7fpTWuXOmXT34NMpXwtkmvaBbEaGSJw4icD89_VC4jGYu1XcwN81MYGzPc5D-hf33FnaKb2_C00-6zZPlu2ySE0y-Pzl0bEzHCbKhH9Eb2U"/></div></div></header><main class="flex-1 w-full"><div class="flex flex-col w-full gap-space-lg">
+<!-- 1. Workspace Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<span class="font-body-sm text-body-sm text-text-secondary">Good morning, District Admin</span>
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">PHC Network Overview</h1>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-tint text-teal-accent font-label-sm text-label-sm shadow-sm">
+<span class="w-2 h-2 rounded-full bg-teal-accent animate-pulse"></span>
+<span>AI monitored</span>
+</div>
+</div>
+</div>
+<!-- Right Cluster: Avatars & Scenario Action -->
+<div class="flex items-center gap-space-md shrink-0">
+<div class="flex items-center -space-x-2.5">
+<img class="w-8 h-8 rounded-full ring-2 ring-card-surface object-cover shadow-sm" data-alt="Close-up portrait of female senior public health officer with glasses in civic clinical operations uniform, warm lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9KnD7soi8So0cA5oneCUweSmOZs1bAEdO8udZDwjR-vBdjtlfESaYIhU21Hg4SqpPXJcrbJ--Y2gufyHbbF3ym10fv9oWiOJSICpnc7sstkLayIMsh38FI1mi7MDsCEuFjU_ZC4IRKL8quHZ5mDlST7eIA75KMtUCVaDtMCth2t0Gwyu-JoZv1KVV-t5LJSz1DN7-Alm-vimMyfu3JDNPUj3m3FGeuryAxYtvirk"/>
+<img class="w-8 h-8 rounded-full ring-2 ring-card-surface object-cover shadow-sm" data-alt="Portrait of male supply chain logistics doctor with stethoscope badge smiling in medical operations center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9J2-cN2dTbzN8Kkqhqcx5pzmeemtUQ75vQEPLOLJX9u-fT27GSo4fMRcKQROj9cn0t49B4gu0P5iK8XNquP4tRJ1hQUqUnY9wXYHW5AZylOpunh4mPF_gZWTimqb6mrbQtTDukhhRaGnwLB116eT2JMrNVosTvughqBROG4xDCJMrQ7SeDi9PG3I4elZd_TBwOS0O6LXuwTm0CuMV-n4ugovFQ7JX3SB8HgY00ss"/>
+<img class="w-8 h-8 rounded-full ring-2 ring-card-surface object-cover shadow-sm" data-alt="Professional portrait of medical inventory coordinator at rural healthcare facility monitoring tele-health tablet." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5EBW6qgbmNdFU9vL7Qu6moxpZ5elr_SL6TQ6KudEBkXOtvCd4UM0DXcKz177L5sVeiMHsXNmeP5MUe0GRpNcLH7aj06nHrcqLLZnzicOYcaDLSosG9xBGHxqju02rHLS5PgcZf0tPHHd6G7LHLYYMw7eAhBoKb-b88hmqRI_xia2gRzTm8CGXp6suQdBucEuvsDHGGHJ8eScEI7xJ2KaNKc4fW65QaG_GiCuR8aY"/>
+</div>
+<button class="bg-text-primary text-on-primary rounded-full px-5 py-2.5 font-label-md text-label-md flex items-center gap-2 hover:bg-action-hover transition-colors shadow-sm cursor-pointer" type="button">
+<span class="material-symbols-outlined text-lg leading-none">add</span>
+<span>Run scenario</span>
+</button>
+</div>
+</section>
+<!-- 2. Filter Row -->
+<section class="flex items-center gap-2 overflow-x-auto pb-1 -mt-1 scrollbar-none">
+<button class="bg-text-primary text-on-primary px-4 py-1.5 rounded-full font-label-sm text-label-sm shadow-sm shrink-0" type="button">
+      All PHCs
+    </button>
+<button class="bg-card-surface text-text-secondary hover:text-text-primary hover:bg-surface-muted px-4 py-1.5 rounded-full font-label-sm text-label-sm shadow-sm shrink-0 transition-colors" type="button">
+      Critical (2)
+    </button>
+<button class="bg-card-surface text-text-secondary hover:text-text-primary hover:bg-surface-muted px-4 py-1.5 rounded-full font-label-sm text-label-sm shadow-sm shrink-0 transition-colors" type="button">
+      Needs attention (3)
+    </button>
+<button class="bg-card-surface text-text-secondary hover:text-text-primary hover:bg-surface-muted px-4 py-1.5 rounded-full font-label-sm text-label-sm shadow-sm shrink-0 transition-colors" type="button">
+      Healthy (13)
+    </button>
+<button class="bg-card-surface text-text-secondary hover:text-text-primary hover:bg-surface-muted px-4 py-1.5 rounded-full font-label-sm text-label-sm shadow-sm shrink-0 transition-colors" type="button">
+      Transfers
+    </button>
+</section>
+<!-- 3. Main Top Two-Column Grid -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-stretch">
+<!-- Left Column: Network Readiness Card (~58% / 7 cols) -->
+<div class="xl:col-span-7 bg-card-surface rounded-[24px] p-6 lg:p-7 shadow-[0_10px_30px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-space-lg">
+<!-- Card Header -->
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-teal-tint text-teal-accent flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">vital_signs</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Network Readiness</h2>
+</div>
+<div class="flex items-center gap-1.5">
+<button class="px-3 py-1 rounded-full bg-surface-muted text-text-primary font-label-sm text-label-sm inline-flex items-center gap-1 hover:bg-workspace-surface transition-colors" type="button">
+<span>Today</span>
+<span class="material-symbols-outlined text-sm text-text-secondary">expand_more</span>
+</button>
+<button aria-label="More options" class="w-8 h-8 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-base">more_horiz</span>
+</button>
+<button aria-label="Expand card" class="w-8 h-8 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-base">open_in_full</span>
+</button>
+</div>
+</div>
+<!-- Card Body: Left Metric + Right Bar Chart -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+<!-- Metric Summary Block -->
+<div class="md:col-span-4 flex flex-col gap-2">
+<span class="bg-green-tint text-green-healthy px-2.5 py-1 rounded-full font-label-sm text-label-sm inline-flex items-center gap-1 w-fit">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+<span>+4 prevented this week</span>
+</span>
+<div class="font-headline-lg text-headline-lg font-bold text-text-primary leading-none my-1 tracking-tight">
+            18
+          </div>
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">PHCs Monitored</span>
+<div class="flex flex-wrap gap-1.5 mt-2">
+<span class="bg-red-tint text-red-critical px-2.5 py-0.5 rounded-full font-label-sm text-label-sm">
+              2 critical
+            </span>
+<span class="bg-amber-tint text-amber-accent px-2.5 py-0.5 rounded-full font-label-sm text-label-sm">
+              3 attention
+            </span>
+<span class="bg-green-tint text-green-healthy px-2.5 py-0.5 rounded-full font-label-sm text-label-sm">
+              13 healthy
+            </span>
+</div>
+</div>
+<!-- Vertical Bar Visualizer -->
+<div class="md:col-span-8 flex flex-col justify-end pt-4">
+<!-- Relative Chart Area -->
+<div class="relative h-44 w-full flex items-end justify-between px-3 pb-2 bg-workspace-surface rounded-2xl">
+<!-- Threshold Line -->
+<div class="absolute inset-x-3 bottom-[50%] flex items-center pointer-events-none z-10">
+<div class="w-full border-b border-dashed border-text-muted/40"></div>
+<span class="absolute right-0 -top-4 font-body-sm text-body-sm text-text-muted bg-workspace-surface px-1.5 rounded">risk threshold</span>
+</div>
+<!-- Bar 1: Rampur -->
+<div class="flex flex-col items-center gap-1.5 group z-20 w-11">
+<span class="opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-red-critical font-bold">25%</span>
+<div class="w-8 h-10 bg-red-critical rounded-full transition-all group-hover:scale-105 shadow-sm"></div>
+</div>
+<!-- Bar 2: Biswan -->
+<div class="flex flex-col items-center gap-1.5 group z-20 w-11">
+<span class="opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-amber-accent font-bold">48%</span>
+<div class="w-8 h-20 bg-amber-accent rounded-full transition-all group-hover:scale-105 shadow-sm"></div>
+</div>
+<!-- Bar 3: Laharpur -->
+<div class="flex flex-col items-center gap-1.5 group z-20 w-11">
+<span class="opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-amber-accent font-bold">52%</span>
+<div class="w-8 h-22 bg-amber-accent rounded-full transition-all group-hover:scale-105 shadow-sm"></div>
+</div>
+<!-- Bar 4: Khairabad -->
+<div class="flex flex-col items-center gap-1.5 group z-20 w-11">
+<span class="opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-green-healthy font-bold">82%</span>
+<div class="w-8 h-32 bg-green-healthy rounded-full transition-all group-hover:scale-105 shadow-sm"></div>
+</div>
+<!-- Bar 5: Hargaon -->
+<div class="flex flex-col items-center gap-1.5 group z-20 w-11">
+<span class="opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-green-healthy font-bold">88%</span>
+<div class="w-8 h-34 bg-green-healthy rounded-full transition-all group-hover:scale-105 shadow-sm"></div>
+</div>
+<!-- Bar 6: Maholi -->
+<div class="flex flex-col items-center gap-1.5 group z-20 w-11">
+<span class="opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-green-healthy font-bold">95%</span>
+<div class="w-8 h-36 bg-green-healthy rounded-full transition-all group-hover:scale-105 shadow-sm relative">
+<span class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-teal-accent rounded-full ring-2 ring-card-surface"></span>
+</div>
+</div>
+</div>
+<!-- Axis Labels -->
+<div class="flex items-center justify-between px-3 pt-2 text-center font-label-sm text-label-sm text-text-secondary">
+<span class="w-11 truncate">Rampur</span>
+<span class="w-11 truncate">Biswan</span>
+<span class="w-11 truncate">Laharpur</span>
+<span class="w-11 truncate">Khairabad</span>
+<span class="w-11 truncate">Hargaon</span>
+<span class="w-11 truncate">Maholi</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Action Timeline Card (~42% / 5 cols) -->
+<div class="xl:col-span-5 bg-card-surface rounded-[24px] p-6 lg:p-7 shadow-[0_10px_30px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-space-md">
+<!-- Card Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-purple-tint text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Action Timeline</h2>
+<p class="font-body-sm text-body-sm text-text-secondary">Active &amp; scheduled moves</p>
+</div>
+</div>
+<button aria-label="Timeline settings" class="w-8 h-8 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-base">more_vert</span>
+</button>
+</div>
+<!-- Date Ruler Grid -->
+<div class="grid grid-cols-6 gap-1 text-center py-2 px-1 bg-workspace-surface rounded-xl font-label-sm text-label-sm text-text-secondary">
+<div>
+<span class="block text-text-primary font-bold">20</span>
+<span class="text-[10px] text-text-muted">Fri</span>
+</div>
+<div>
+<span class="block text-text-primary font-bold">21</span>
+<span class="text-[10px] text-text-muted">Sat</span>
+</div>
+<div>
+<span class="block text-text-primary font-bold">22</span>
+<span class="text-[10px] text-text-muted">Sun</span>
+</div>
+<div>
+<span class="block text-text-secondary">23</span>
+<span class="text-[10px] text-text-muted">Mon</span>
+</div>
+<div>
+<span class="block text-text-secondary">24</span>
+<span class="text-[10px] text-text-muted">Tue</span>
+</div>
+<div>
+<span class="block text-text-secondary">25</span>
+<span class="text-[10px] text-text-muted">Wed</span>
+</div>
+</div>
+<!-- Floating Scheduled Action Bars -->
+<div class="flex flex-col gap-2.5 flex-1 justify-center">
+<!-- Urgent AI Transfer Bar (20-22 Sep) -->
+<div class="bg-purple-tint p-3 rounded-2xl shadow-sm flex items-center justify-between gap-2 hover:brightness-98 transition-all">
+<div class="flex flex-col gap-0.5 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="bg-card-surface text-on-tertiary-container px-2 py-0.5 rounded-full font-label-sm text-label-sm font-semibold tracking-tight">AI Transfer</span>
+<span class="font-label-sm text-label-sm text-text-primary font-bold truncate">ORS Transfer · Maholi → Rampur</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary truncate">120 units · Prevents stockout in 2.5 days</p>
+</div>
+<div class="flex items-center gap-1 shrink-0 text-text-secondary">
+<span class="w-6 h-6 rounded-full bg-card-surface flex items-center justify-center font-label-sm text-label-sm font-bold text-text-primary">M</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</div>
+</div>
+<!-- Review Task Bar (20-21 Sep) -->
+<div class="bg-amber-tint p-2.5 rounded-xl flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-text-primary font-bold truncate">Rampur restock review · 20–21 Sep</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Bed pressure 90%</span>
+</div>
+<span class="bg-card-surface text-text-primary px-2 py-0.5 rounded-full font-label-sm text-label-sm shrink-0 font-medium">Critical</span>
+</div>
+<!-- Scheduled Check Bar (23 Sep) -->
+<div class="bg-workspace-surface p-2.5 rounded-xl flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-text-primary font-semibold truncate">Biswan insulin check · 23 Sep</span>
+<span class="font-body-sm text-body-sm text-text-muted">Reorder buffer: 3 days</span>
+</div>
+<span class="material-symbols-outlined text-base text-text-secondary shrink-0">check_circle</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Bottom Grid: Four Equal Floating White Cards -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter items-stretch">
+<!-- Card 1: District Map -->
+<div class="bg-card-surface rounded-[24px] p-5 shadow-[0_10px_30px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-teal-accent text-lg">location_on</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">District Map</h3>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary bg-surface-muted px-2.5 py-0.5 rounded-full">Sitapur</span>
+</div>
+<!-- Stylized District Map Illustration Canvas -->
+<div class="relative h-48 w-full rounded-2xl overflow-hidden bg-workspace-surface p-3 flex flex-col justify-between">
+<!-- District SVG Vector Map Outlines -->
+<svg class="absolute inset-0 w-full h-full text-outline-variant/30" fill="none" preserveaspectratio="none" viewbox="0 0 200 160">
+<polygon fill="currentColor" fill-opacity="0.25" points="20,30 80,15 140,25 185,60 170,130 90,145 35,120 15,70"></polygon>
+<path d="M80,15 L90,85 L170,130 M90,85 L35,120 M90,85 L140,25" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1.2"></path>
+</svg>
+<!-- Static Facility Nodes -->
+<div class="absolute top-8 left-14 flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-green-healthy shadow-sm"></span>
+<span class="font-body-sm text-body-sm text-text-secondary">Maholi</span>
+</div>
+<div class="absolute top-10 right-8 flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-green-healthy shadow-sm"></span>
+<span class="font-body-sm text-body-sm text-text-secondary">Hargaon</span>
+</div>
+<div class="absolute bottom-12 right-10 flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-accent shadow-sm"></span>
+<span class="font-body-sm text-body-sm text-text-secondary">Biswan</span>
+</div>
+<!-- Center Highlight Pulse Node for Rampur -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="relative flex items-center justify-center">
+<span class="animate-ping absolute inline-flex h-6 w-6 rounded-full bg-red-critical opacity-40"></span>
+<span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-critical shadow"></span>
+</div>
+</div>
+<!-- Bottom Pill Banner on Map -->
+<div class="relative z-10 mt-auto flex justify-center">
+<div class="bg-text-primary text-on-primary font-label-sm text-label-sm px-3 py-1.5 rounded-full inline-flex items-center gap-2 shadow-md">
+<span class="w-2 h-2 rounded-full bg-red-critical animate-pulse"></span>
+<span>Rampur PHC · Critical</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Coordination -->
+<div class="bg-card-surface rounded-[24px] p-5 shadow-[0_10px_30px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-info text-lg">group</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Coordination</h3>
+</div>
+<button aria-label="Add contact" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-base">person_add</span>
+</button>
+</div>
+<!-- Mini Search Input -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-text-muted text-base">search</span>
+<input class="w-full bg-workspace-surface rounded-full py-1.5 pl-9 pr-3 font-body-sm text-body-sm text-text-primary placeholder:text-text-muted focus:outline-none" placeholder="Search district officers..." type="text"/>
+</div>
+<!-- Contact Rows -->
+<div class="flex flex-col gap-2.5">
+<!-- Row 1: Jane Cooper -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 min-w-0">
+<div class="relative shrink-0">
+<img class="w-8 h-8 rounded-full object-cover shadow-sm" data-alt="Portrait of senior female district medical officer in formal attire smiling in clinical administrative office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArM4KgnWkjgyzrbIE9slQFZuIZOR0PIidJctk3hfVGSV3xNdnpD0ak-mTBBXjx2ZWINnLFsSxfB61HvuOk_KDhi0e__GpgGJkOTUDwFfCkM8j3ypZLOltAE1_dC4btC50jboW1UHLiVemGhTzmuD4DTuoTKa2bhzQZ_bF1YGuFPzGDn2EMPcWlXURW14bibmSM7fVY5BzbKHyWfjZ2iRSdN3IhptaEo53zP_9odik"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-green-healthy ring-1 ring-card-surface"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-text-primary font-semibold truncate">Jane Cooper</span>
+<span class="font-body-sm text-body-sm text-text-muted truncate">CMO Officer</span>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button aria-label="Call Jane Cooper" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary" type="button">
+<span class="material-symbols-outlined text-sm">call</span>
+</button>
+<button aria-label="Message Jane Cooper" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary" type="button">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+</button>
+</div>
+</div>
+<!-- Row 2: Kristin Watson -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 min-w-0">
+<div class="relative shrink-0">
+<img class="w-8 h-8 rounded-full object-cover shadow-sm" data-alt="Portrait of female supply chain coordinator in warehouse setting with digital medical clipboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBemg15_mXx6Y-C6tC5whmsPzHSyJi2b-NpuslW-8Nl_8WvDCygkDAqOi-65fN-57GXbPyvdy7pLkmF6NXkoXVBeKOsdq1j_Lhfik1dGpxRN0L-7l7yR1ttTiuQj2ikIxTPFdU_1VxN92lQ_7lioTbCJwu_CYqol8mOMc5kXG4w365O-3Cm6lDw4Jk00uVEcBKA5qQ9eWnVyat9-dApR47nnPbzxeRWcOWTcoQ_UZU"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-green-healthy ring-1 ring-card-surface"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-text-primary font-semibold truncate">Kristin Watson</span>
+<span class="font-body-sm text-body-sm text-text-muted truncate">Logistics Lead</span>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button aria-label="Call Kristin Watson" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary" type="button">
+<span class="material-symbols-outlined text-sm">call</span>
+</button>
+<button aria-label="Message Kristin Watson" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary" type="button">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+</button>
+</div>
+</div>
+<!-- Row 3: Jacob Jones -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 min-w-0">
+<div class="relative shrink-0">
+<img class="w-8 h-8 rounded-full object-cover shadow-sm" data-alt="Portrait of male community pharmacist in medical lab coat with stockroom background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3t92mLdB5hezWiSoq1mpJ7mMq7047QkKBNlsmH3eoS7tmmKBKz1NQqMf3hottaSTDf2g-e6xgfJ_IrQ78Zh7goB92R4MNYamsitKof3ITpKKJECYj5V9CamWqVKpgdZrLTtrUXA9v2rZhum9BlXTydek1XdlcpdRvdfk7lPI1qy8xevQ9azgWb_Lp00s7gW05vf6_kPvxfPcMCPIpPj1KnP4ySVzaW8AJoElwz9E"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-text-muted ring-1 ring-card-surface"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-text-primary font-semibold truncate">Jacob Jones</span>
+<span class="font-body-sm text-body-sm text-text-muted truncate">Rampur Pharmacist · 8m</span>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button aria-label="Call Jacob Jones" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary" type="button">
+<span class="material-symbols-outlined text-sm">call</span>
+</button>
+<button aria-label="Message Jacob Jones" class="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-text-secondary hover:text-text-primary" type="button">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Medicine Coverage -->
+<div class="bg-card-surface rounded-[24px] p-5 shadow-[0_10px_30px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-critical text-lg">medication</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Medicine Coverage</h3>
+</div>
+<span class="material-symbols-outlined text-text-muted text-base" title="Estimated network shelf-life">info</span>
+</div>
+<!-- Metric & Threshold Pill -->
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-text-primary leading-none">5.1</span>
+<span class="font-body-sm text-body-sm text-text-muted">avg days at risk</span>
+</div>
+<span class="font-label-sm text-label-sm text-amber-accent bg-amber-tint px-2 py-0.5 rounded-full inline-block mt-2 font-medium">
+          Recommended 10+ days coverage
+        </span>
+</div>
+<!-- Item Coverage Progress Bars -->
+<div class="flex flex-col gap-2 mt-1">
+<!-- ORS -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-text-secondary">ORS Sachets</span>
+<span class="font-bold text-red-critical">2.5 days</span>
+</div>
+<div class="w-full h-1.5 bg-workspace-surface rounded-full overflow-hidden">
+<div class="h-full bg-red-critical rounded-full" style="width: 25%;"></div>
+</div>
+</div>
+<!-- Amoxicillin -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-text-secondary">Amoxicillin</span>
+<span class="font-bold text-red-critical">2.7 days</span>
+</div>
+<div class="w-full h-1.5 bg-workspace-surface rounded-full overflow-hidden">
+<div class="h-full bg-red-critical rounded-full" style="width: 27%;"></div>
+</div>
+</div>
+<!-- Insulin -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-text-secondary">Insulin</span>
+<span class="font-semibold text-green-healthy">14.0 days</span>
+</div>
+<div class="w-full h-1.5 bg-workspace-surface rounded-full overflow-hidden">
+<div class="h-full bg-green-healthy rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Paracetamol -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-text-secondary">Paracetamol</span>
+<span class="font-semibold text-green-healthy">11.7 days</span>
+</div>
+<div class="w-full h-1.5 bg-workspace-surface rounded-full overflow-hidden">
+<div class="h-full bg-green-healthy rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: Bed Occupancy -->
+<div class="bg-card-surface rounded-[24px] p-5 shadow-[0_10px_30px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-accent text-lg">single_bed</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Bed Occupancy</h3>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary">Network avg</span>
+</div>
+<!-- Occupancy Metrics -->
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-text-primary leading-none">82%</span>
+<span class="font-body-sm text-body-sm text-text-muted">occupied (164/200)</span>
+</div>
+<span class="font-label-sm text-label-sm text-amber-accent inline-flex items-center gap-0.5 mt-1 font-semibold">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+<span>+6% from yesterday</span>
+</span>
+</div>
+<!-- Compact Amber Sparkline Area Visualization -->
+<div class="relative w-full h-20 bg-workspace-surface rounded-xl p-2 flex items-end">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 40">
+<defs>
+<lineargradient id="amberGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#F2C94C" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#F2C94C" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<path d="M 0,35 Q 15,30 30,32 T 60,20 T 85,12 L 100,8 L 100,40 L 0,40 Z" fill="url(#amberGradient)"></path>
+<path d="M 0,35 Q 15,30 30,32 T 60,20 T 85,12 L 100,8" fill="none" stroke="#F2C94C" stroke-linecap="round" stroke-width="2.5"></path>
+<circle cx="100" cy="8" fill="#F2C94C" r="3"></circle>
+</svg>
+</div>
+<!-- Footer Note -->
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm text-text-secondary pt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-red-critical"></span>
+<span class="truncate">Rampur PHC peak: <strong class="text-text-primary">90% capacity</strong></span>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full mt-space-xl pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm text-text-muted font-body-sm text-body-sm"><div>© 2025 ArogyaNet National Public Health Resilience Infrastructure. All rights reserved.</div><div class="flex items-center gap-space-md"><span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-healthy"></span> Telemetry Active</span><span>District Grid Status: Synced</span></div></footer></div></div></body></html>

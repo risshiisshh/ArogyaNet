@@ -1,0 +1,362 @@
+[
+  {
+    "phc_id": "PHC001",
+    "phc_name": "Rampur PHC",
+    "district": "Sitapur",
+    "block": "Rampur Mathura",
+    "latitude": 27.421,
+    "longitude": 80.679,
+    "beds_total": 20,
+    "beds_occupied": 19,
+    "staff_total": 6,
+    "staff_present": 4,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 20, "daily_consumption_rate": 8, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 40, "daily_consumption_rate": 15, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 56, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 320, "daily_consumption_rate": 40, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 18, "daily_consumption_rate": 6, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC002",
+    "phc_name": "Maholi PHC",
+    "district": "Sitapur",
+    "block": "Maholi",
+    "latitude": 27.531,
+    "longitude": 80.701,
+    "beds_total": 15,
+    "beds_occupied": 8,
+    "staff_total": 5,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 380, "daily_consumption_rate": 12, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 210, "daily_consumption_rate": 10, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 85, "daily_consumption_rate": 3, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 890, "daily_consumption_rate": 35, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 72, "daily_consumption_rate": 5, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC003",
+    "phc_name": "Biswan PHC",
+    "district": "Sitapur",
+    "block": "Biswan",
+    "latitude": 27.493,
+    "longitude": 80.973,
+    "beds_total": 20,
+    "beds_occupied": 14,
+    "staff_total": 6,
+    "staff_present": 6,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 95, "daily_consumption_rate": 14, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 120, "daily_consumption_rate": 12, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 12, "daily_consumption_rate": 5, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 480, "daily_consumption_rate": 45, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 35, "daily_consumption_rate": 7, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC004",
+    "phc_name": "Khairabad PHC",
+    "district": "Sitapur",
+    "block": "Khairabad",
+    "latitude": 27.543,
+    "longitude": 80.759,
+    "beds_total": 20,
+    "beds_occupied": 11,
+    "staff_total": 7,
+    "staff_present": 6,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 155, "daily_consumption_rate": 10, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 180, "daily_consumption_rate": 11, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 44, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 650, "daily_consumption_rate": 38, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 55, "daily_consumption_rate": 6, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC005",
+    "phc_name": "Hargaon PHC",
+    "district": "Sitapur",
+    "block": "Hargaon",
+    "latitude": 27.396,
+    "longitude": 80.934,
+    "beds_total": 15,
+    "beds_occupied": 10,
+    "staff_total": 5,
+    "staff_present": 4,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 200, "daily_consumption_rate": 11, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 145, "daily_consumption_rate": 9, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 38, "daily_consumption_rate": 3, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 720, "daily_consumption_rate": 42, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 48, "daily_consumption_rate": 5, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC006",
+    "phc_name": "Laharpur PHC",
+    "district": "Sitapur",
+    "block": "Laharpur",
+    "latitude": 27.713,
+    "longitude": 80.891,
+    "beds_total": 20,
+    "beds_occupied": 13,
+    "staff_total": 6,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 70, "daily_consumption_rate": 13, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 88, "daily_consumption_rate": 10, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 22, "daily_consumption_rate": 6, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 350, "daily_consumption_rate": 36, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 28, "daily_consumption_rate": 8, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC007",
+    "phc_name": "Sitapur Urban PHC",
+    "district": "Sitapur",
+    "block": "Sitapur Sadar",
+    "latitude": 27.563,
+    "longitude": 80.681,
+    "beds_total": 30,
+    "beds_occupied": 22,
+    "staff_total": 10,
+    "staff_present": 9,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 420, "daily_consumption_rate": 20, "reorder_threshold": 60 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 280, "daily_consumption_rate": 18, "reorder_threshold": 70 },
+      { "medicine_name": "Insulin (vials)", "quantity": 90, "daily_consumption_rate": 7, "reorder_threshold": 30 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 1100, "daily_consumption_rate": 60, "reorder_threshold": 150 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 85, "daily_consumption_rate": 10, "reorder_threshold": 30 }
+    ]
+  },
+  {
+    "phc_id": "PHC008",
+    "phc_name": "Fatehpur PHC",
+    "district": "Barabanki",
+    "block": "Fatehpur",
+    "latitude": 26.994,
+    "longitude": 81.204,
+    "beds_total": 15,
+    "beds_occupied": 14,
+    "staff_total": 5,
+    "staff_present": 3,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 22, "daily_consumption_rate": 9, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 65, "daily_consumption_rate": 8, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 18, "daily_consumption_rate": 5, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 180, "daily_consumption_rate": 32, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 14, "daily_consumption_rate": 6, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC009",
+    "phc_name": "Nawabganj PHC",
+    "district": "Barabanki",
+    "block": "Nawabganj",
+    "latitude": 26.933,
+    "longitude": 81.379,
+    "beds_total": 20,
+    "beds_occupied": 9,
+    "staff_total": 6,
+    "staff_present": 6,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 310, "daily_consumption_rate": 13, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 195, "daily_consumption_rate": 12, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 65, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 780, "daily_consumption_rate": 40, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 60, "daily_consumption_rate": 6, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC010",
+    "phc_name": "Ramnagar PHC",
+    "district": "Barabanki",
+    "block": "Ramnagar",
+    "latitude": 27.044,
+    "longitude": 81.143,
+    "beds_total": 20,
+    "beds_occupied": 11,
+    "staff_total": 6,
+    "staff_present": 6,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 175, "daily_consumption_rate": 11, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 140, "daily_consumption_rate": 10, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 42, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 560, "daily_consumption_rate": 38, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 44, "daily_consumption_rate": 5, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC011",
+    "phc_name": "Dewa PHC",
+    "district": "Barabanki",
+    "block": "Dewa",
+    "latitude": 26.868,
+    "longitude": 81.212,
+    "beds_total": 15,
+    "beds_occupied": 7,
+    "staff_total": 5,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 240, "daily_consumption_rate": 9, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 170, "daily_consumption_rate": 8, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 55, "daily_consumption_rate": 3, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 620, "daily_consumption_rate": 30, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 52, "daily_consumption_rate": 4, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC012",
+    "phc_name": "Haidergarh PHC",
+    "district": "Barabanki",
+    "block": "Haidergarh",
+    "latitude": 26.788,
+    "longitude": 81.311,
+    "beds_total": 20,
+    "beds_occupied": 16,
+    "staff_total": 6,
+    "staff_present": 4,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 28, "daily_consumption_rate": 10, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 55, "daily_consumption_rate": 11, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 10, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 220, "daily_consumption_rate": 34, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 12, "daily_consumption_rate": 6, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC013",
+    "phc_name": "Sandila PHC",
+    "district": "Hardoi",
+    "block": "Sandila",
+    "latitude": 27.077,
+    "longitude": 80.522,
+    "beds_total": 20,
+    "beds_occupied": 12,
+    "staff_total": 6,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 130, "daily_consumption_rate": 10, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 160, "daily_consumption_rate": 11, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 48, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 590, "daily_consumption_rate": 36, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 46, "daily_consumption_rate": 5, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC014",
+    "phc_name": "Shahabad PHC",
+    "district": "Hardoi",
+    "block": "Shahabad",
+    "latitude": 27.652,
+    "longitude": 79.933,
+    "beds_total": 15,
+    "beds_occupied": 8,
+    "staff_total": 5,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 280, "daily_consumption_rate": 9, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 190, "daily_consumption_rate": 8, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 60, "daily_consumption_rate": 3, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 810, "daily_consumption_rate": 32, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 65, "daily_consumption_rate": 4, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC015",
+    "phc_name": "Bilgram PHC",
+    "district": "Hardoi",
+    "block": "Bilgram",
+    "latitude": 27.197,
+    "longitude": 80.035,
+    "beds_total": 20,
+    "beds_occupied": 17,
+    "staff_total": 6,
+    "staff_present": 4,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 16, "daily_consumption_rate": 8, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 44, "daily_consumption_rate": 13, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 8, "daily_consumption_rate": 5, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 190, "daily_consumption_rate": 38, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 11, "daily_consumption_rate": 7, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC016",
+    "phc_name": "Hardoi Urban PHC",
+    "district": "Hardoi",
+    "block": "Hardoi Sadar",
+    "latitude": 27.397,
+    "longitude": 80.135,
+    "beds_total": 30,
+    "beds_occupied": 18,
+    "staff_total": 9,
+    "staff_present": 8,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 350, "daily_consumption_rate": 18, "reorder_threshold": 60 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 260, "daily_consumption_rate": 16, "reorder_threshold": 70 },
+      { "medicine_name": "Insulin (vials)", "quantity": 78, "daily_consumption_rate": 6, "reorder_threshold": 30 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 980, "daily_consumption_rate": 55, "reorder_threshold": 150 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 80, "daily_consumption_rate": 9, "reorder_threshold": 30 }
+    ]
+  },
+  {
+    "phc_id": "PHC017",
+    "phc_name": "Sandi PHC",
+    "district": "Hardoi",
+    "block": "Sandi",
+    "latitude": 27.294,
+    "longitude": 80.531,
+    "beds_total": 15,
+    "beds_occupied": 6,
+    "staff_total": 5,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 195, "daily_consumption_rate": 8, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 155, "daily_consumption_rate": 8, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 50, "daily_consumption_rate": 3, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 700, "daily_consumption_rate": 30, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 55, "daily_consumption_rate": 4, "reorder_threshold": 20 }
+    ]
+  },
+  {
+    "phc_id": "PHC018",
+    "phc_name": "Tadiyawan PHC",
+    "district": "Hardoi",
+    "block": "Tadiyawan",
+    "latitude": 27.501,
+    "longitude": 80.315,
+    "beds_total": 20,
+    "beds_occupied": 15,
+    "staff_total": 6,
+    "staff_present": 5,
+    "last_updated": "2026-09-24T06:00:00Z",
+    "inventory": [
+      { "medicine_name": "ORS Sachets", "quantity": 80, "daily_consumption_rate": 12, "reorder_threshold": 30 },
+      { "medicine_name": "Amoxicillin 250mg", "quantity": 100, "daily_consumption_rate": 10, "reorder_threshold": 50 },
+      { "medicine_name": "Insulin (vials)", "quantity": 25, "daily_consumption_rate": 4, "reorder_threshold": 20 },
+      { "medicine_name": "Paracetamol 500mg", "quantity": 400, "daily_consumption_rate": 35, "reorder_threshold": 100 },
+      { "medicine_name": "IV Fluids (bags)", "quantity": 30, "daily_consumption_rate": 6, "reorder_threshold": 20 }
+    ]
+  }
+]
