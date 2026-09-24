@@ -1,23 +1,10 @@
 import type { Metadata } from "next";
-import { Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "600"],
-});
-
 export const metadata: Metadata = {
-  title: "ArogyaNet — Public Health Operations & Resilience Platform",
-  description: "Next-generation rural health facility monitoring, stock-out forecasting and AI redistribution platform for district administrators.",
+  title: "ArogyaNet — Civic Resilience Operations Platform",
+  description: "Public health resource monitoring, forecasting, and inter-PHC redistribution network.",
 };
 
 export default function RootLayout({
@@ -26,22 +13,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${jetbrainsMono.variable} antialiased`}>
-      <body className="min-h-screen flex flex-col bg-[#EDEEF0] text-[#111318]">
-        <Navigation />
-        <main className="flex-1 w-full max-w-[1720px] mx-auto px-4 lg:px-8 py-6">
-          {children}
-        </main>
-        <footer className="mt-auto border-t border-[#E7E9EE] bg-white py-4 text-center text-xs text-[#8D93A1]">
-          <div className="max-w-[1720px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div>
-              <span className="font-semibold text-[#111318]">ArogyaNet</span> • Public Health Emergency Logistics and Early Warning System
-            </div>
-            <div>
-              Built for District Health Surveillance • Powered by Deterministic Forecasting + Gemini AI
-            </div>
+    <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="bg-app-bg min-h-screen text-text-primary antialiased font-body-md text-body-md">
+        <div className="min-h-screen p-space-sm sm:p-space-lg lg:p-margin flex flex-col justify-start items-center">
+          <div className="w-full max-w-[1440px] bg-workspace-surface rounded-lg shadow-[0_18px_45px_rgba(17,19,24,0.08)] flex flex-col min-h-[860px] p-space-md sm:p-space-lg lg:p-space-xl">
+            <Navigation />
+            {children}
+            <footer className="w-full mt-space-xl pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm text-text-muted font-body-sm text-body-sm">
+              <div>
+                © 2025 ArogyaNet National Public Health Resilience Infrastructure. All rights reserved.
+              </div>
+              <div className="flex items-center gap-space-md">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-green-healthy"></span> Telemetry Active
+                </span>
+                <span>District Grid Status: Synced</span>
+              </div>
+            </footer>
           </div>
-        </footer>
+        </div>
       </body>
     </html>
   );

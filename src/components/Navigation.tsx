@@ -2,151 +2,94 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Hospital,
-  AlertTriangle,
-  ArrowLeftRight,
-  Sliders,
-  Globe2,
-  Bot,
-  Activity,
-  ShieldCheck,
-} from "lucide-react";
 
 export function Navigation() {
   const pathname = usePathname();
 
-  const navItems = [
-    { label: "Dashboard", href: "/", icon: LayoutDashboard },
-    { label: "PHC Detail", href: "/phc/PHC001", icon: Hospital },
-    {
-      label: "Early Warnings",
-      href: "/alerts",
-      icon: AlertTriangle,
-      badge: "4 Critical",
-      badgeColor: "bg-[#FDE8E8] text-[#D93838]",
-    },
-    {
-      label: "Redistribution",
-      href: "/redistributions",
-      icon: ArrowLeftRight,
-      badge: "AI Plan",
-      badgeColor: "bg-[#E7F7F5] text-[#0F8F88]",
-    },
-    { label: "Emergency Simulator", href: "/simulator", icon: Sliders },
-    { label: "BRICS Compare", href: "/brics", icon: Globe2 },
-    { label: "Admin Assistant", href: "/assistant", icon: Bot },
+  const links = [
+    { label: "Dashboard", href: "/" },
+    { label: "PHC Network", href: "/phc" },
+    { label: "Alerts", href: "/alerts" },
+    { label: "Redistribution", href: "/redistributions" },
+    { label: "Simulator", href: "/simulator" },
+    { label: "BRICS Network", href: "/brics" },
+    { label: "Assistant", href: "/assistant" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E7E9EE] shadow-sm">
-      <div className="max-w-[1720px] mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4">
-          {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-[#0F8F88] flex items-center justify-center text-white shadow-md shadow-[#0F8F88]/20 group-hover:scale-105 transition-transform">
-              <Activity className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-lg tracking-tight text-[#111318]">
-                  Arogya<span className="text-[#0F8F88]">Net</span>
-                </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#E5F6EE] text-[#248A54] border border-[#248A54]/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#248A54] animate-pulse"></span>
-                  LIVE OPS
-                </span>
-              </div>
-              <p className="text-[11px] text-[#626875] -mt-0.5 hidden sm:block">
-                Health Network Resilience Platform
-              </p>
-            </div>
-          </Link>
+    <header className="w-full flex items-center justify-between gap-space-md mb-space-lg pb-space-sm">
+      <Link href="/" className="flex items-center gap-space-sm shrink-0">
+        <img
+          alt="ArogyaNet Logo"
+          className="h-8 w-auto object-contain"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6qxmKbLaD7ThdwfscOxdOjF63CQFk_FBeIqnSNpqn7rDO_lxT0UCJmmSVlpc_EoIpSUfqcc9sfkpfGjuy-iNm8N-nQ6wX0TfCYfWhDZCGvGyDZgp3L_KplPcfWO3GNdm2N4KJp-aJS4ma5bFujR8YiYTBFjChaESBC2-4LlojmilI4vw6itMoos0Ic9T0NFb9f2irMN39ETLu_Fe3Fy_o7b9AWwzHYQCe2-eK8V4"
+        />
+        <span className="font-headline-sm text-headline-sm text-text-primary tracking-tight">
+          ArogyaNet
+        </span>
+      </Link>
 
-          {/* Navigation Pills */}
-          <nav className="hidden xl:flex items-center gap-1 bg-[#F8F8FA] p-1.5 rounded-full border border-[#E7E9EE]">
-            {navItems.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href) ||
-                    (item.href.startsWith("/phc") && pathname.startsWith("/phc"));
-              const Icon = item.icon;
+      <nav className="hidden xl:flex items-center gap-space-xs bg-surface-muted p-1 rounded-full border border-border-hairline">
+        {links.map((link) => {
+          const isActive =
+            link.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(link.href) ||
+                (link.href.startsWith("/phc") && pathname.startsWith("/phc"));
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                    isActive
-                      ? "bg-[#111318] text-white shadow-sm"
-                      : "text-[#626875] hover:text-[#111318] hover:bg-white"
-                  }`}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span>{item.label}</span>
-                  {item.badge && !isActive && (
-                    <span
-                      className={`text-[9px] px-1.5 py-0.5 rounded-full font-bold leading-none ${item.badgeColor}`}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Top Right System Info */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="hidden md:flex flex-col items-end text-right">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#111318]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#0F8F88]" />
-                <span>Sitapur & Hardoi Grid</span>
-              </div>
-              <span className="text-[10px] text-[#8D93A1]">18 PHCs Monitored • Synced 2m ago</span>
-            </div>
-
-            <div className="h-8 w-px bg-[#E7E9EE] hidden md:block"></div>
-
+          return (
             <Link
-              href="/alerts"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#D93838] text-white hover:bg-[#b82929] transition-colors shadow-sm shadow-red-500/20"
+              key={link.href}
+              href={link.href}
+              className={`px-space-md py-space-xs rounded-full font-label-md text-label-md transition-colors ${
+                isActive
+                  ? "bg-text-primary text-white shadow-[0_4px_14px_rgba(17,19,24,0.08)]"
+                  : "text-text-secondary hover:text-text-primary hover:bg-card-surface"
+              }`}
             >
-              <AlertTriangle className="w-3.5 h-3.5" />
-              <span>Critical Alerts</span>
-              <span className="bg-white/25 px-1.5 py-0.2 rounded-full text-[10px]">
-                4
-              </span>
+              {link.label}
             </Link>
-          </div>
-        </div>
+          );
+        })}
+      </nav>
 
-        {/* Mobile / Compact Nav Pills */}
-        <div className="xl:hidden flex items-center gap-1 py-2 overflow-x-auto no-scrollbar border-t border-[#E7E9EE]">
-          {navItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href) ||
-                  (item.href.startsWith("/phc") && pathname.startsWith("/phc"));
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0 transition-colors ${
-                  isActive
-                    ? "bg-[#111318] text-white"
-                    : "text-[#626875] bg-[#F8F8FA] hover:bg-gray-200"
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+      <div className="flex items-center gap-space-xs sm:gap-space-sm shrink-0">
+        <Link
+          href="/assistant"
+          aria-label="Search"
+          className="w-10 h-10 rounded-full bg-card-surface border border-border-hairline flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]"
+        >
+          <span className="material-symbols-outlined text-lg">search</span>
+        </Link>
+        <Link
+          href="/alerts"
+          aria-label="Notifications"
+          className="relative w-10 h-10 rounded-full bg-card-surface border border-border-hairline flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]"
+        >
+          <span className="material-symbols-outlined text-lg">notifications</span>
+          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-critical"></span>
+        </Link>
+        <button
+          onClick={() => window.location.reload()}
+          aria-label="Sync / Refresh"
+          className="w-10 h-10 rounded-full bg-card-surface border border-border-hairline flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]"
+          type="button"
+        >
+          <span className="material-symbols-outlined text-lg">sync</span>
+        </button>
+        <button
+          aria-label="Display settings"
+          className="w-10 h-10 rounded-full bg-card-surface border border-border-hairline flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-[0_4px_14px_rgba(17,19,24,0.04)]"
+          type="button"
+        >
+          <span className="material-symbols-outlined text-lg">light_mode</span>
+        </button>
+        <div className="flex items-center gap-space-xs pl-space-xs">
+          <img
+            alt="District Admin avatar"
+            className="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(17,19,24,0.08)] border border-border-hairline"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5mhhRZ0gF5xSOontnz9jwH_t1lv-0guZjwPTjifeh6wI_efFycjsDLO6421OtZAVJizMcLmfJ7k19K_B1HGwYPbiO-bKdMFoBwLQYYuKaSUyRJkA_SkernAocDklr7fpTWuXOmXT34NMpXwtkmvaBbEaGSJw4icD89_VC4jGYu1XcwN81MYGzPc5D-hf33FnaKb2_C00-6zZPlu2ySE0y-Pzl0bEzHCbKhH9Eb2U"
+          />
         </div>
       </div>
     </header>

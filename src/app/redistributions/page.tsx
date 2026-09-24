@@ -1,373 +1,779 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import rawPhcs from "@/data/phcs.json";
-import { computeRedistributions, PHC, TransferRecommendation } from "@/lib/domain";
-import {
-  AlertCircle,
-  ArrowLeftRight,
-  ArrowRight,
-  Check,
-  CheckCircle2,
-  Clock,
-  ExternalLink,
-  Info,
-  MapPin,
-  Pill,
-  Send,
-  ShieldCheck,
-  Sparkles,
-  Truck,
-} from "lucide-react";
 
 export default function RedistributionPage() {
-  const phcs = useMemo(() => rawPhcs as PHC[], []);
-  const initialRecommendations = useMemo(() => computeRedistributions(phcs), [phcs]);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isRecalculating, setIsRecalculating] = useState(false);
+  const [showConsentModal, setShowConsentModal] = useState(false);
+  const [showRouteModal, setShowRouteModal] = useState(false);
 
-  const [authorizedMap, setAuthorizedMap] = useState<Record<string, boolean>>({});
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
-  const [successModal, setSuccessModal] = useState<TransferRecommendation | null>(null);
-  const [batchSuccess, setBatchSuccess] = useState<boolean>(false);
-
-  const filteredRecs = useMemo(() => {
-    return initialRecommendations.filter((rec) => {
-      if (selectedFilter === "urgent") return rec.urgency === "urgent";
-      if (selectedFilter === "authorized") return !!authorizedMap[rec.id];
-      if (selectedFilter === "pending") return !authorizedMap[rec.id];
-      return true;
-    });
-  }, [initialRecommendations, selectedFilter, authorizedMap]);
-
-  const totalUnits = useMemo(() => {
-    return initialRecommendations.reduce((acc, r) => acc + r.quantity, 0);
-  }, [initialRecommendations]);
-
-  const handleAuthorize = (rec: TransferRecommendation) => {
-    setAuthorizedMap((prev) => ({
-      ...prev,
-      [rec.id]: true,
-    }));
-    setSuccessModal(rec);
+  const handleRecalculate = () => {
+    setIsRecalculating(true);
+    setTimeout(() => {
+      setIsRecalculating(false);
+    }, 800);
   };
 
-  const handleBatchAuthorize = () => {
-    const updated: Record<string, boolean> = {};
-    initialRecommendations.forEach((r) => {
-      updated[r.id] = true;
-    });
-    setAuthorizedMap(updated);
-    setBatchSuccess(true);
+  const handleApprove = () => {
+    setIsApproved(true);
+    setShowConsentModal(true);
   };
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Header Banner */}
-      <div className="bg-white rounded-[24px] p-6 lg:p-8 border border-[#E7E9EE] shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#626875]">
-              Autonomous Resource Rebalancing
-            </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E7F7F5] text-[#0F8F88]">
-              <Sparkles className="w-3.5 h-3.5" />
-              Verified Safe Surplus Algorithm
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111318] tracking-tight">
-            Inter-PHC Redistribution Matrix
-          </h1>
-          <p className="text-sm text-[#626875] max-w-3xl">
-            Surplus-to-deficit transfer plans automatically calculated to eliminate stockouts without violating donor safety thresholds (7-day reserve buffer strictly enforced).
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={handleBatchAuthorize}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111318] text-white text-xs font-bold hover:bg-[#252830] transition-colors shadow-sm"
-          >
-            <CheckCircle2 className="w-4 h-4 text-[#0F8F88]" />
-            <span>Authorize All ({initialRecommendations.length}) Transfers</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Safety Policy & Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Policy Box */}
-        <div className="bg-[#E7F7F5] p-5 rounded-2xl border border-[#0F8F88]/20 flex flex-col justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#0F8F88]">
-              <ShieldCheck className="w-4 h-4" />
-              <span>Safety Buffer Policy</span>
+    <main className="flex-1 w-full">
+      <div className="flex flex-col w-full gap-space-lg">
+        {/* Header Cluster */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+          <div className="flex flex-col gap-space-xs">
+            <div className="inline-flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-healthy animate-pulse"></span>
+              <span className="font-label-sm text-label-sm text-text-muted tracking-wider uppercase">
+                Updated 10:25 IST · Telemetry Active
+              </span>
             </div>
-            <p className="text-xs text-[#111318] leading-relaxed pt-1">
-              Donor facilities must retain <strong>7 days of normal consumption</strong> + minimum reorder reserve. Transfers cannot trigger secondary shortages.
+            <h1 className="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+              Redistribution Recommendations
+            </h1>
+            <p className="font-body-md text-body-md text-text-secondary max-w-2xl">
+              AI-matched facility transfers that resolve urgent stockout vulnerabilities while rigorously safeguarding source-centre safety buffers.
             </p>
           </div>
-          <div className="text-[10px] font-bold text-[#0F8F88] pt-2">
-            Deterministic Constraint Enforced
-          </div>
-        </div>
-
-        {/* Transfer Count */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E7E9EE] shadow-sm">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#8D93A1] mb-1">
-            Rebalancing Plans
-          </div>
-          <div className="text-3xl font-extrabold text-[#111318]">
-            {initialRecommendations.length}
-          </div>
-          <div className="text-[11px] text-[#626875] mt-1">Across 8 Facility Pairs</div>
-        </div>
-
-        {/* Units to Rebalance */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E7E9EE] shadow-sm">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#0F8F88] mb-1">
-            Total Rebalance Units
-          </div>
-          <div className="text-3xl font-extrabold text-[#0F8F88]">{totalUnits}</div>
-          <div className="text-[11px] text-[#626875] mt-1">ORS, Antibiotics &amp; Insulin</div>
-        </div>
-
-        {/* Stockout Days Prevented */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E7E9EE] shadow-sm">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#248A54] mb-1">
-            Coverage Gained
-          </div>
-          <div className="text-3xl font-extrabold text-[#248A54]">+9.4 Days</div>
-          <div className="text-[11px] text-[#626875] mt-1">Average per recipient clinic</div>
-        </div>
-      </div>
-
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-        {[
-          { id: "all", label: `All Recommendations (${initialRecommendations.length})` },
-          {
-            id: "urgent",
-            label: `Urgent Only (${initialRecommendations.filter((r) => r.urgency === "urgent").length})`,
-          },
-          {
-            id: "pending",
-            label: `Pending Authorization (${
-              initialRecommendations.filter((r) => !authorizedMap[r.id]).length
-            })`,
-          },
-          {
-            id: "authorized",
-            label: `Authorized (${Object.keys(authorizedMap).filter((k) => authorizedMap[k]).length})`,
-          },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setSelectedFilter(tab.id)}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
-              selectedFilter === tab.id
-                ? "bg-[#111318] text-white shadow-sm"
-                : "bg-white text-[#626875] hover:bg-[#F8F8FA] border border-[#E7E9EE]"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Recommendations Cards Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {filteredRecs.map((rec) => {
-          const isAuthorized = authorizedMap[rec.id];
-
-          return (
-            <div
-              key={rec.id}
-              className={`bg-white rounded-[24px] p-6 border transition-all space-y-4 shadow-sm ${
-                isAuthorized
-                  ? "border-[#248A54]/40 bg-[#E5F6EE]/20"
-                  : rec.urgency === "urgent"
-                  ? "border-[#D93838]/40 hover:border-[#D93838]"
-                  : "border-[#E7E9EE] hover:border-[#111318]"
-              }`}
+          {/* Action Pills */}
+          <div className="flex items-center gap-space-xs shrink-0">
+            <button
+              onClick={() => {
+                const report = {
+                  recommendation: "REC-01",
+                  source: "Maholi PHC",
+                  destination: "Rampur PHC",
+                  item: "ORS Sachets",
+                  quantity: 120,
+                  transit: "14 km via SH-26 (~25 mins)",
+                  status: isApproved ? "Approved" : "Pending Approval",
+                  timestamp: new Date().toISOString(),
+                };
+                const blob = new Blob([JSON.stringify(report, null, 2)], {
+                  type: "application/json",
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "redistribution-analysis.json";
+                a.click();
+              }}
+              className="inline-flex items-center gap-2 px-space-md py-2.5 rounded-full bg-card-surface text-text-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.04)] hover:bg-surface-muted transition-colors cursor-pointer"
+              type="button"
             >
-              {/* Card Header: Medicine & Urgency */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-[#8D93A1]">
-                      #{rec.id}
+              <span className="material-symbols-outlined text-base text-text-secondary">
+                download
+              </span>
+              Export analysis
+            </button>
+            <button
+              onClick={handleRecalculate}
+              disabled={isRecalculating}
+              className="inline-flex items-center gap-2 px-space-md py-2.5 rounded-full bg-card-surface text-text-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.04)] hover:bg-surface-muted transition-colors active:scale-95 cursor-pointer disabled:opacity-50"
+              type="button"
+            >
+              <span
+                className={`material-symbols-outlined text-base text-teal-accent transition-transform duration-700 ${
+                  isRecalculating ? "rotate-180" : ""
+                }`}
+              >
+                sync
+              </span>
+              <span>{isRecalculating ? "Recalculating..." : "Recalculate"}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* AI Insight Alert Banner */}
+        <div className="w-full bg-teal-tint rounded-lg p-space-md sm:p-space-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md shadow-[0_4px_20px_rgba(15,143,136,0.06)]">
+          <div className="flex items-start sm:items-center gap-space-md">
+            <div className="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center text-teal-accent shadow-[0_2px_8px_rgba(17,19,24,0.04)] shrink-0">
+              <span
+                className="material-symbols-outlined text-xl"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                auto_awesome
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-headline-sm text-headline-sm text-text-primary">
+                  1 urgent transfer can prevent a stockout at Rampur PHC today
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+                  Critical Window
+                </span>
+              </div>
+              <span className="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Recommendations analyze real-time cold-chain logs, daily burn rates, and minimum mandated reorder levels across 14 Sitapur district facilities.
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+            <span className="font-label-sm text-label-sm text-teal-accent bg-card-surface px-3 py-1.5 rounded-full shadow-[0_2px_6px_rgba(0,0,0,0.04)]">
+              High Confidence · 99.4%
+            </span>
+          </div>
+        </div>
+
+        {/* Main Asymmetric Workspace Layout */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+          {/* LEFT COLUMN: Featured Transfer & Secondary Lists (8 Cols) */}
+          <div className="xl:col-span-8 flex flex-col gap-space-lg">
+            {/* Featured Transfer Card */}
+            <div className="bg-card-surface rounded-lg p-space-lg sm:p-7 shadow-[0_18px_45px_rgba(17,19,24,0.08)] flex flex-col gap-6">
+              {/* Card Meta Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-4">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-critical"></span>
+                    Urgent Priority
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-surface-muted text-text-secondary font-label-sm text-label-sm">
+                    Recommendation 01 · Sitapur Network
+                  </span>
+                  {isApproved && (
+                    <span className="px-3 py-1 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm font-semibold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-healthy"></span>
+                      Approved &amp; Logged
                     </span>
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide ${
-                        rec.urgency === "urgent"
-                          ? "bg-[#FDE8E8] text-[#D93838]"
-                          : "bg-[#FFF4D6] text-[#E0A000]"
-                      }`}
-                    >
-                      {rec.urgency} Action
+                  )}
+                </div>
+                <div className="flex items-center gap-2 text-text-muted font-body-sm text-body-sm">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="material-symbols-outlined text-sm">route</span>
+                    14 km via SH-26
+                  </span>
+                  <span>·</span>
+                  <span className="inline-flex items-center gap-1 text-green-healthy font-label-sm text-label-sm">
+                    <span className="material-symbols-outlined text-sm">verified</span>
+                    Telemetry Verified
+                  </span>
+                </div>
+              </div>
+
+              {/* Featured Title */}
+              <div>
+                <h2 className="font-headline-md text-headline-md text-text-primary tracking-tight">
+                  Transfer 120 ORS Sachets from Maholi PHC to Rampur PHC
+                </h2>
+                <p className="font-body-md text-body-md text-text-secondary mt-1">
+                  Reallocates excess buffer stock to avert projected complete depletion at Rampur within 60 hours.
+                </p>
+              </div>
+
+              {/* Transfer Interactive Visual Representation Diagram */}
+              <div className="grid grid-cols-1 md:grid-cols-11 gap-4 items-center bg-workspace-surface p-4 sm:p-6 rounded-lg">
+                {/* Source Facility Node (5 cols) */}
+                <div className="md:col-span-5 bg-green-tint rounded-DEFAULT p-5 flex flex-col gap-3 shadow-[0_4px_16px_rgba(47,168,107,0.05)]">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded-full bg-card-surface text-green-healthy font-label-sm text-label-sm font-semibold">
+                      Source Facility
+                    </span>
+                    <span className="font-label-sm text-label-sm text-green-healthy flex items-center gap-1 font-semibold">
+                      <span className="material-symbols-outlined text-sm">check_circle</span>
+                      Surplus (+160u)
                     </span>
                   </div>
-                  <h3 className="text-lg font-extrabold text-[#111318]">
-                    {rec.medicine_name}
-                  </h3>
+                  <div>
+                    <div className="font-headline-sm text-headline-sm text-text-primary">
+                      Maholi PHC
+                    </div>
+                    <div className="font-body-sm text-body-sm text-text-secondary">
+                      Sub-district Hub · Facility #UP-STP-04
+                    </div>
+                  </div>
+                  <div className="pt-2 flex flex-col gap-1.5">
+                    <div className="flex justify-between items-baseline">
+                      <span className="font-body-sm text-body-sm text-text-secondary">
+                        Current ORS Stock:
+                      </span>
+                      <span className="font-label-md text-label-md text-text-primary font-bold">
+                        360 units
+                      </span>
+                    </div>
+                    <div className="w-full bg-card-surface rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-green-healthy h-full rounded-full transition-all duration-500"
+                        style={{ width: isApproved ? "66%" : "82%" }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between items-center text-body-sm font-body-sm text-text-muted mt-1">
+                      <span>Safe floor after move:</span>
+                      <span className="font-label-sm text-label-sm text-text-primary font-bold">
+                        240 units
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-text-muted font-body-sm text-body-sm pt-2 bg-card-surface/70 -mx-2 px-3 py-1.5 rounded-full flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1">
+                      <span className="material-symbols-outlined text-sm text-text-secondary">
+                        distance
+                      </span>
+                      14 km transit
+                    </span>
+                    <span className="font-label-sm text-label-sm text-text-secondary">
+                      ~25 mins transit time
+                    </span>
+                  </div>
                 </div>
 
-                <div className="text-right">
-                  <div className="text-xs font-bold uppercase text-[#8D93A1]">
-                    Transfer Quantity
+                {/* Transfer Arrow Node (1 col) */}
+                <div className="md:col-span-1 flex flex-col items-center justify-center gap-2 py-2 md:py-0">
+                  <div className="w-12 h-12 rounded-full bg-text-primary text-on-primary flex items-center justify-center shadow-[0_8px_20px_rgba(17,19,24,0.18)] hover:scale-105 transition-transform cursor-pointer">
+                    <span className="material-symbols-outlined text-2xl rotate-90 md:rotate-0">
+                      east
+                    </span>
                   </div>
-                  <div className="text-2xl font-black text-[#0F8F88]">
-                    {rec.quantity} <span className="text-xs font-semibold">units</span>
+                  <div className="flex flex-col items-center text-center">
+                    <span className="font-headline-sm text-headline-sm text-teal-accent font-bold">
+                      120
+                    </span>
+                    <span className="font-label-sm text-label-sm text-text-secondary -mt-1 uppercase text-[10px]">
+                      Units
+                    </span>
+                  </div>
+                </div>
+
+                {/* Destination Facility Node (5 cols) */}
+                <div className="md:col-span-5 bg-red-tint rounded-DEFAULT p-5 flex flex-col gap-3 shadow-[0_4px_16px_rgba(224,82,82,0.05)]">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded-full bg-card-surface text-red-critical font-label-sm text-label-sm font-semibold">
+                      Destination Facility
+                    </span>
+                    <span className="font-label-sm text-label-sm text-red-critical flex items-center gap-1 font-bold">
+                      <span className="material-symbols-outlined text-sm">
+                        {isApproved ? "local_shipping" : "warning"}
+                      </span>
+                      {isApproved ? "Transit In-Progress" : "Stockout Threat"}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="font-headline-sm text-headline-sm text-text-primary">
+                      Rampur PHC
+                    </div>
+                    <div className="font-body-sm text-body-sm text-text-secondary">
+                      Rural Centre · Facility #UP-STP-11
+                    </div>
+                  </div>
+                  <div className="pt-2 flex flex-col gap-1.5">
+                    <div className="flex justify-between items-baseline">
+                      <span className="font-body-sm text-body-sm text-text-secondary">
+                        Current ORS Stock:
+                      </span>
+                      <span className="font-label-md text-label-md text-red-critical font-bold">
+                        20 units
+                      </span>
+                    </div>
+                    <div className="w-full bg-card-surface rounded-full h-2 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          isApproved ? "bg-green-healthy" : "bg-red-critical animate-pulse"
+                        }`}
+                        style={{ width: isApproved ? "70%" : "14%" }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between items-center text-body-sm font-body-sm text-text-muted mt-1">
+                      <span>Buffer exhaustion:</span>
+                      <span className="font-label-sm text-label-sm text-red-critical font-bold">
+                        {isApproved ? "+17.5d secured" : "2.5 days left"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-text-muted font-body-sm text-body-sm pt-2 bg-card-surface/70 -mx-2 px-3 py-1.5 rounded-full flex items-center justify-between">
+                    <span className="text-text-secondary">Post-transfer buffer:</span>
+                    <span className="font-label-sm text-label-sm text-green-healthy font-bold">
+                      140 units (+17.5 days)
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Source -> Destination Visual Transfer Flow */}
-              <div className="grid grid-cols-1 sm:grid-cols-11 items-center gap-3 p-4 rounded-2xl bg-[#F8F8FA] border border-[#E7E9EE]">
-                {/* Donor Source */}
-                <div className="sm:col-span-5 space-y-1">
-                  <div className="flex items-center justify-between text-[10px] uppercase font-bold text-[#8D93A1]">
-                    <span>Donor (Surplus)</span>
-                    <span className="text-[#248A54] font-bold">Safe Buffer OK</span>
-                  </div>
-                  <div className="font-extrabold text-sm text-[#111318]">
-                    {rec.source_phc_name}
-                  </div>
-                  <div className="text-[11px] text-[#626875]">
-                    Coverage after transfer: <strong>{rec.source_days_after} days</strong>
-                  </div>
-                </div>
-
-                {/* Arrow Icon */}
-                <div className="sm:col-span-1 flex justify-center py-2 sm:py-0">
-                  <div className="w-8 h-8 rounded-full bg-white border border-[#E7E9EE] flex items-center justify-center text-[#0F8F88] shadow-xs">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-
-                {/* Destination Recipient */}
-                <div className="sm:col-span-5 space-y-1 sm:text-right">
-                  <div className="flex items-center sm:justify-end gap-1.5 text-[10px] uppercase font-bold text-[#D93838]">
-                    <span>Recipient (Deficit)</span>
-                  </div>
-                  <div className="font-extrabold text-sm text-[#111318]">
-                    {rec.destination_phc_name}
-                  </div>
-                  <div className="text-[11px] text-[#626875]">
-                    Coverage extended to: <strong className="text-[#248A54]">~{rec.destination_days_after} days</strong>
-                  </div>
-                </div>
-              </div>
-
-              {/* AI Justification Quote */}
-              <div className="p-3.5 rounded-xl bg-[#F8F8FA] border border-[#E7E9EE] text-xs text-[#626875] leading-relaxed italic">
-                &ldquo;{rec.reason}&rdquo;
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex items-center justify-between pt-2 border-t border-[#E7E9EE]">
-                <div className="flex items-center gap-1.5 text-xs text-[#8D93A1]">
-                  <Truck className="w-3.5 h-3.5 text-[#0F8F88]" />
-                  <span>District Medical Transport (Route A)</span>
-                </div>
-
+              {/* AI Safety Reasoning & Proof Box */}
+              <div className="bg-surface-muted rounded-DEFAULT p-5 flex flex-col gap-3.5">
                 <div className="flex items-center gap-2">
-                  <Link
-                    href={`/phc/${rec.destination_phc_id}`}
-                    className="px-3 py-1.5 rounded-full text-xs font-bold text-[#626875] hover:text-[#111318] hover:bg-[#F8F8FA] transition-colors"
-                  >
-                    View Facility
-                  </Link>
+                  <span className="material-symbols-outlined text-teal-accent text-lg">
+                    psychology
+                  </span>
+                  <span className="font-label-md text-label-md text-text-primary uppercase tracking-wider text-xs">
+                    AI Safety Validation &amp; Allocation Logic
+                  </span>
+                </div>
+                <p className="font-body-md text-body-md text-text-secondary leading-relaxed">
+                  Maholi maintains an average consumption of 4.2 units/day and will preserve{" "}
+                  <strong className="text-text-primary font-semibold">240 units</strong>{" "}
+                  post-dispatch—comfortably exceeding its regulatory safety floor of 180 units (57 days of local reserve). Moving 120 sachets resolves Rampur’s acute pediatric dehydration surge without exposing Maholi to supply-chain vulnerability.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                  <div className="bg-card-surface p-3 rounded-DEFAULT flex flex-col">
+                    <span className="text-text-muted font-label-sm text-[11px] uppercase">
+                      Rampur Daily Burn
+                    </span>
+                    <span className="font-headline-sm text-headline-sm text-text-primary font-bold mt-0.5">
+                      8 units/day
+                    </span>
+                    <span className="font-body-sm text-[11px] text-text-secondary mt-0.5">
+                      +45% monsoon surge
+                    </span>
+                  </div>
+                  <div className="bg-card-surface p-3 rounded-DEFAULT flex flex-col">
+                    <span className="text-text-muted font-label-sm text-[11px] uppercase">
+                      Coverage Added
+                    </span>
+                    <span className="font-headline-sm text-headline-sm text-teal-accent font-bold mt-0.5">
+                      +17.5 Days
+                    </span>
+                    <span className="font-body-sm text-[11px] text-text-secondary mt-0.5">
+                      Through Oct 12, 2025
+                    </span>
+                  </div>
+                  <div className="bg-card-surface p-3 rounded-DEFAULT flex flex-col">
+                    <span className="text-text-muted font-label-sm text-[11px] uppercase">
+                      Maholi Buffer Margin
+                    </span>
+                    <span className="font-headline-sm text-headline-sm text-green-healthy font-bold mt-0.5">
+                      +60 units
+                    </span>
+                    <span className="font-body-sm text-[11px] text-text-secondary mt-0.5">
+                      Above mandatory 180u
+                    </span>
+                  </div>
+                  <div className="bg-card-surface p-3 rounded-DEFAULT flex flex-col">
+                    <span className="text-text-muted font-label-sm text-[11px] uppercase">
+                      Transit Integrity
+                    </span>
+                    <span className="font-headline-sm text-headline-sm text-text-primary font-bold mt-0.5">
+                      Compliant
+                    </span>
+                    <span className="font-body-sm text-[11px] text-text-secondary mt-0.5">
+                      Non-coldchain dry goods
+                    </span>
+                  </div>
+                </div>
+              </div>
 
+              {/* Action Row & Consent Guard */}
+              <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-space-xs flex-wrap">
+                  {isApproved ? (
+                    <button
+                      className="px-space-md py-2.5 rounded-full bg-green-healthy text-white font-label-md text-label-md flex items-center gap-2 shadow-[0_4px_14px_rgba(47,168,107,0.25)]"
+                      type="button"
+                    >
+                      <span className="material-symbols-outlined text-lg">check_circle</span>
+                      Transfer Coordination Active
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleApprove}
+                      className="px-space-md py-2.5 rounded-full bg-text-primary text-on-primary font-label-md text-label-md hover:bg-action-hover transition-all flex items-center gap-2 shadow-[0_4px_14px_rgba(17,19,24,0.12)] active:scale-98 cursor-pointer"
+                      type="button"
+                    >
+                      <span className="material-symbols-outlined text-lg">check_circle</span>
+                      Approve for Coordination
+                    </button>
+                  )}
                   <button
-                    onClick={() => handleAuthorize(rec)}
-                    disabled={isAuthorized}
-                    className={`px-4 py-2 rounded-full text-xs font-extrabold flex items-center gap-1.5 transition-all shadow-sm ${
-                      isAuthorized
-                        ? "bg-[#248A54] text-white cursor-default"
-                        : "bg-[#111318] text-white hover:bg-[#252830]"
-                    }`}
+                    onClick={() => setShowRouteModal(true)}
+                    className="px-space-md py-2.5 rounded-full bg-card-surface text-text-secondary hover:text-text-primary font-label-md text-label-md hover:bg-surface-muted transition-colors flex items-center gap-1.5 shadow-[0_2px_8px_rgba(17,19,24,0.04)] cursor-pointer"
+                    type="button"
                   >
-                    {isAuthorized ? (
-                      <>
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Dispatched to Driver ✓</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-3.5 h-3.5 text-[#0F8F88]" />
-                        <span>Authorize for Coordination</span>
-                      </>
-                    )}
+                    <span className="material-symbols-outlined text-base">map</span>
+                    Inspect Route &amp; PHCs
+                  </button>
+                </div>
+                <div className="flex items-center gap-2 text-text-muted font-body-sm text-body-sm">
+                  <span className="material-symbols-outlined text-base text-teal-accent">
+                    verified_user
+                  </span>
+                  <span>Ledger logging only; no central purchase requisition triggered.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Secondary Opportunities Section */}
+            <div className="flex flex-col gap-space-md">
+              <div className="flex items-center justify-between">
+                <h3 className="font-headline-sm text-headline-sm text-text-primary">
+                  Secondary Opportunities &amp; Unmatched Needs
+                </h3>
+                <span className="font-label-sm text-label-sm text-text-muted">
+                  2 District Items Monitored
+                </span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+                {/* Card 1: Attention Proposal */}
+                <div className="bg-card-surface rounded-DEFAULT p-5 shadow-[0_18px_45px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-4 hover:shadow-[0_20px_50px_rgba(17,19,24,0.08)] transition-shadow">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-accent"></span>
+                        Attention
+                      </span>
+                      <span className="text-text-muted font-body-sm text-body-sm">
+                        18 km route
+                      </span>
+                    </div>
+                    <div className="font-headline-sm text-body-lg text-text-primary font-bold">
+                      Consider moving 30 IV Fluids (Normal Saline 500ml) from Khairabad to Biswan PHC
+                    </div>
+                    <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                      Khairabad holds a 28-day operating buffer. Biswan PHC will touch its reorder threshold in 4 days at current maternal care admission volume.
+                    </p>
+                  </div>
+                  <div className="pt-3 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 text-text-muted font-body-sm text-body-sm">
+                      <span className="material-symbols-outlined text-sm text-amber-accent">
+                        schedule
+                      </span>
+                      Resolution target: 48h
+                    </div>
+                    <button
+                      onClick={() => alert("Normal Saline transfer proposal added to queue.")}
+                      className="inline-flex items-center gap-1 font-label-sm text-label-sm text-text-primary hover:text-teal-accent font-bold transition-colors cursor-pointer"
+                    >
+                      Review proposal
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Card 2: Unmatched / Central Purchase Requisition Recommended */}
+                <div className="bg-card-surface rounded-DEFAULT p-5 shadow-[0_18px_45px_rgba(17,19,24,0.04)] flex flex-col justify-between gap-4 hover:shadow-[0_20px_50px_rgba(17,19,24,0.08)] transition-shadow">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 rounded-full bg-blue-tint text-blue-info font-label-sm text-label-sm font-semibold flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">info</span>
+                        Central Reorder Required
+                      </span>
+                      <span className="text-text-muted font-body-sm text-body-sm">
+                        Insulin Cold-Chain
+                      </span>
+                    </div>
+                    <div className="font-headline-sm text-body-lg text-text-primary font-bold">
+                      No safe peer transfer found for Regular Insulin at Biswan PHC
+                    </div>
+                    <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                      All 6 adjacent facilities (Maholi, Rampur, Hargaon, Laharpur) are at or below mandatory minimum insulin safety cushions. Dispatching would create peer vulnerabilities.
+                    </p>
+                  </div>
+                  <div className="pt-3 flex items-center justify-between">
+                    <span className="px-2.5 py-1 rounded-full bg-surface-muted font-label-sm text-label-sm text-text-secondary">
+                      PO #IN-904 recommended
+                    </span>
+                    <Link
+                      href="/phc/PHC002"
+                      className="inline-flex items-center gap-1 font-label-sm text-label-sm text-teal-accent hover:text-text-primary font-bold transition-colors"
+                    >
+                      View facility
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Network Impact & Dispatch Coordination (4 Cols) */}
+          <div className="xl:col-span-4 flex flex-col gap-space-lg">
+            {/* Network Impact Card */}
+            <div className="bg-card-surface rounded-lg p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.08)] flex flex-col gap-5">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-headline-sm text-headline-sm text-text-primary">
+                    Network Impact
+                  </h3>
+                  <span className="px-2.5 py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm font-semibold">
+                    Simulated
+                  </span>
+                </div>
+                <span className="font-body-sm text-body-sm text-text-secondary">
+                  Projected outcome if Recommendation 01 is authorized today
+                </span>
+              </div>
+              {/* Metric KPI stack */}
+              <div className="flex flex-col gap-3">
+                <div className="p-3.5 rounded-DEFAULT bg-workspace-surface flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-green-tint text-green-healthy flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-base">check</span>
+                    </div>
+                    <div>
+                      <div className="font-label-md text-label-md text-text-primary">
+                        1 Critical Risk Resolved
+                      </div>
+                      <div className="font-body-sm text-body-sm text-text-secondary">
+                        Rampur PHC stockout prevented
+                      </div>
+                    </div>
+                  </div>
+                  <span className="font-headline-sm text-headline-sm text-green-healthy font-bold">
+                    100%
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-DEFAULT bg-workspace-surface flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-teal-tint text-teal-accent flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-base">
+                        shield_with_heart
+                      </span>
+                    </div>
+                    <div>
+                      <div className="font-label-md text-label-md text-text-primary">
+                        Zero Cascade Risk
+                      </div>
+                      <div className="font-body-sm text-body-sm text-text-secondary">
+                        0 source PHCs fall below floor
+                      </div>
+                    </div>
+                  </div>
+                  <span className="font-headline-sm text-headline-sm text-teal-accent font-bold">
+                    0 PHC
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-DEFAULT bg-workspace-surface flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-purple-tint text-purple-accent flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-base">trending_up</span>
+                    </div>
+                    <div>
+                      <div className="font-label-md text-label-md text-text-primary">
+                        ORS Resiliency Extended
+                      </div>
+                      <div className="font-body-sm text-body-sm text-text-secondary">
+                        Restores district cluster safety
+                      </div>
+                    </div>
+                  </div>
+                  <span className="font-headline-sm text-headline-sm text-text-primary font-bold">
+                    +17.5d
+                  </span>
+                </div>
+              </div>
+              {/* Comparative Progress Visualizers */}
+              <div className="flex flex-col gap-4 pt-2">
+                <div className="font-label-sm text-label-sm text-text-muted uppercase tracking-wider text-xs">
+                  Facility Days-of-Supply Delta
+                </div>
+                {/* Rampur Delta */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between items-center font-body-sm text-body-sm">
+                    <span className="font-bold text-text-primary">Rampur PHC</span>
+                    <span className="text-text-secondary">
+                      2.5d <span className="text-green-healthy font-bold">→ 19.5d</span>
+                    </span>
+                  </div>
+                  <div className="h-3 w-full bg-surface-muted rounded-full overflow-hidden flex">
+                    <div className="bg-red-critical h-full" style={{ width: "13%" }}></div>
+                    <div className="bg-green-healthy h-full opacity-80" style={{ width: "67%" }}></div>
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] text-text-muted">
+                    <span>Current: 20 units</span>
+                    <span className="text-green-healthy font-semibold">
+                      Restored: 140 units
+                    </span>
+                  </div>
+                </div>
+                {/* Maholi Delta */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between items-center font-body-sm text-body-sm">
+                    <span className="font-bold text-text-primary">Maholi PHC</span>
+                    <span className="text-text-secondary">
+                      85d <span className="text-text-primary font-bold">→ 57d</span>
+                    </span>
+                  </div>
+                  <div className="h-3 w-full bg-surface-muted rounded-full overflow-hidden flex">
+                    <div className="bg-green-healthy h-full" style={{ width: "67%" }}></div>
+                    <div className="bg-surface-variant h-full" style={{ width: "33%" }}></div>
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] text-text-muted">
+                    <span>Post-move: 240 units</span>
+                    <span className="text-teal-accent font-semibold">
+                      Min safety floor: 180 units
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* Dual Consent Protocol Badge */}
+              <div className="mt-2 p-3 bg-workspace-surface rounded-DEFAULT flex items-start gap-2.5">
+                <span className="material-symbols-outlined text-teal-accent text-base mt-0.5">
+                  phonelink_lock
+                </span>
+                <p className="font-body-sm text-body-sm text-text-secondary leading-snug">
+                  <strong className="text-text-primary font-semibold">
+                    Dual-Consent Guard:
+                  </strong>{" "}
+                  Dispatch vehicle receives barcode confirmation only after both storekeepers scan and acknowledge the physical pallet handoff.
+                </p>
+              </div>
+            </div>
+
+            {/* District Transfer Coordination Card */}
+            <div className="bg-card-surface rounded-lg p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.08)] flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <h3 className="font-headline-sm text-headline-sm text-text-primary">
+                  Logistics Coordination
+                </h3>
+                <span className="px-2.5 py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm font-semibold">
+                  Standby
+                </span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-workspace-surface rounded-DEFAULT">
+                <div className="w-11 h-11 rounded-full bg-teal-accent/20 text-teal-accent flex items-center justify-center font-bold">
+                  KW
+                </div>
+                <div className="flex flex-col flex-1 min-w-0">
+                  <div className="font-label-md text-label-md text-text-primary truncate font-bold">
+                    Kristin Watson
+                  </div>
+                  <div className="font-body-sm text-body-sm text-text-secondary truncate">
+                    District Logistics Lead · Sitapur HQ
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    onClick={() => alert("Initiating secure satellite call to Kristin Watson...")}
+                    aria-label="Call Logistics Officer"
+                    className="w-8 h-8 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-sm cursor-pointer"
+                    type="button"
+                  >
+                    <span className="material-symbols-outlined text-base">call</span>
+                  </button>
+                  <button
+                    onClick={() => alert("Opening secure dispatch messaging...")}
+                    aria-label="Message Logistics Officer"
+                    className="w-8 h-8 rounded-full bg-card-surface flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors shadow-sm cursor-pointer"
+                    type="button"
+                  >
+                    <span className="material-symbols-outlined text-base">chat</span>
                   </button>
                 </div>
               </div>
+              <div className="flex flex-col gap-2.5 font-body-sm text-body-sm text-text-secondary pt-1">
+                <div className="flex items-center justify-between py-1">
+                  <span className="flex items-center gap-1.5 text-text-muted">
+                    <span className="material-symbols-outlined text-base text-text-secondary">
+                      traffic
+                    </span>
+                    Route State
+                  </span>
+                  <span className="font-label-sm text-label-sm text-text-primary font-bold">
+                    SH-26 Clear (No bottlenecks)
+                  </span>
+                </div>
+                <div className="flex items-center justify-between py-1">
+                  <span className="flex items-center gap-1.5 text-text-muted">
+                    <span className="material-symbols-outlined text-base text-text-secondary">
+                      local_shipping
+                    </span>
+                    Assigned Courier
+                  </span>
+                  <span className="font-label-sm text-label-sm text-text-primary font-bold">
+                    Mobile Logistics Unit #02
+                  </span>
+                </div>
+                <div className="flex items-center justify-between py-1">
+                  <span className="flex items-center gap-1.5 text-text-muted">
+                    <span className="material-symbols-outlined text-base text-text-secondary">
+                      alarm
+                    </span>
+                    Dispatch Target
+                  </span>
+                  <span className="font-label-sm text-label-sm text-teal-accent font-bold">
+                    11:00 – 13:30 IST Window
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => alert("Driver & Route Telemetry assigned. Tracking ping: MLU-02 active.")}
+                className="w-full py-2.5 rounded-full bg-workspace-surface text-text-primary font-label-md text-label-md hover:bg-surface-muted transition-colors flex items-center justify-center gap-2 mt-1 cursor-pointer"
+                type="button"
+              >
+                <span className="material-symbols-outlined text-base">local_shipping</span>
+                Assign Driver &amp; Route Telemetry
+              </button>
             </div>
-          );
-        })}
+          </div>
+        </div>
       </div>
 
       {/* Confirmation Modal */}
-      {successModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-[24px] max-w-md w-full p-6 space-y-4 shadow-xl border border-[#E7E9EE] animate-in fade-in zoom-in-95 duration-150">
-            <div className="w-12 h-12 rounded-full bg-[#E5F6EE] text-[#248A54] flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-6 h-6" />
+      {showConsentModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+          <div className="bg-card-surface rounded-2xl max-w-md w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
+            <div className="w-12 h-12 rounded-full bg-green-tint text-green-healthy flex items-center justify-center">
+              <span className="material-symbols-outlined text-2xl">check_circle</span>
             </div>
-
-            <div className="text-center space-y-1">
-              <h3 className="text-lg font-extrabold text-[#111318]">
-                Transfer Manifest Dispatched!
+            <div>
+              <h3 className="font-headline-sm text-headline-sm text-text-primary font-bold">
+                Transfer Coordination Authorized
               </h3>
-              <p className="text-xs text-[#626875]">
-                Electronic dispatch order generated and transmitted to District Health Logistics Unit.
+              <p className="font-body-md text-body-md text-text-secondary mt-1">
+                Recommendation #01 (120 ORS Sachets: Maholi → Rampur) has been added to the Sitapur District Logistics ledger.
               </p>
             </div>
-
-            <div className="bg-[#F8F8FA] p-4 rounded-xl text-xs space-y-2 border border-[#E7E9EE]">
-              <div className="flex justify-between">
-                <span className="text-[#626875]">Medicine:</span>
-                <span className="font-bold text-[#111318]">{successModal.medicine_name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#626875]">Quantity:</span>
-                <span className="font-bold text-[#0F8F88]">{successModal.quantity} units</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#626875]">Source PHC:</span>
-                <span className="font-bold text-[#111318]">{successModal.source_phc_name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#626875]">Destination PHC:</span>
-                <span className="font-bold text-[#D93838]">{successModal.destination_phc_name}</span>
-              </div>
+            <div className="p-3 bg-workspace-surface rounded-xl text-xs text-text-secondary flex flex-col gap-1">
+              <div><strong>Dispatch Manifest:</strong> #MNF-2025-0924-01</div>
+              <div><strong>Courier:</strong> Mobile Logistics Unit #02</div>
+              <div><strong>Dual Barcode Pin:</strong> Valid until 18:00 IST</div>
             </div>
-
             <button
-              onClick={() => setSuccessModal(null)}
-              className="w-full py-2.5 rounded-full bg-[#111318] text-white text-xs font-bold hover:bg-[#252830] transition-colors"
+              onClick={() => setShowConsentModal(false)}
+              className="w-full py-2.5 rounded-full bg-text-primary text-on-primary font-label-md text-label-md hover:bg-action-hover transition-colors"
             >
-              Close &amp; Continue Monitoring
+              Done
             </button>
           </div>
         </div>
       )}
 
-      {/* Batch Success Notification */}
-      {batchSuccess && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#111318] text-white px-5 py-3 rounded-full shadow-lg flex items-center gap-3 animate-in slide-in-from-bottom-5">
-          <CheckCircle2 className="w-5 h-5 text-[#248A54]" />
-          <span className="text-xs font-bold">
-            All {initialRecommendations.length} transfers authorized and queued for dispatch!
-          </span>
-          <button
-            onClick={() => setBatchSuccess(false)}
-            className="text-xs text-[#8D93A1] hover:text-white"
-          >
-            &times;
-          </button>
+      {/* Route Modal */}
+      {showRouteModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+          <div className="bg-card-surface rounded-2xl max-w-lg w-full p-6 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between">
+              <h3 className="font-headline-sm text-headline-sm text-text-primary font-bold">
+                Route Inspection: Maholi ➔ Rampur
+              </h3>
+              <button
+                onClick={() => setShowRouteModal(false)}
+                className="w-8 h-8 rounded-full hover:bg-surface-muted flex items-center justify-center text-text-muted hover:text-text-primary"
+              >
+                <span className="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+            <div className="p-4 bg-workspace-surface rounded-xl flex flex-col gap-3 font-body-sm text-body-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-text-muted">Distance:</span>
+                <span className="font-bold text-text-primary">14.2 km</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-text-muted">Primary Arterial:</span>
+                <span className="font-bold text-text-primary">State Highway 26 (SH-26)</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-text-muted">Estimated Transit Duration:</span>
+                <span className="font-bold text-teal-accent">24 minutes</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-text-muted">Bridge &amp; Culvert Clearances:</span>
+                <span className="font-bold text-green-healthy">No Monsoonal Inundation</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowRouteModal(false)}
+              className="w-full py-2.5 rounded-full bg-text-primary text-on-primary font-label-md text-label-md hover:bg-action-hover transition-colors"
+            >
+              Close Route Inspection
+            </button>
+          </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }

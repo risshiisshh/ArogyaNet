@@ -1,524 +1,785 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import rawPhcs from "@/data/phcs.json";
-import {
-  enrichPHC,
-  enrichAllPHCs,
-  computeAlerts,
-  computeRedistributions,
-  PHC,
-} from "@/lib/domain";
-import {
-  Activity,
-  AlertTriangle,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  Bed,
-  CheckCircle2,
-  Clock,
-  ExternalLink,
-  Hospital,
-  MapPin,
-  Pill,
-  Share2,
-  ShieldAlert,
-  Sparkles,
-  TrendingDown,
-  Users,
-} from "lucide-react";
+import { useParams } from "next/navigation";
 
 export default function PHCDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const id = (params?.id as string) || "PHC001";
 
-  const allPhcs = useMemo(() => rawPhcs as PHC[], []);
-  const enrichedList = useMemo(() => enrichAllPHCs(allPhcs), [allPhcs]);
-
-  const currentPHC = useMemo(() => {
-    const found = allPhcs.find(
-      (p) => p.phc_id.toLowerCase() === id.toLowerCase() || p.phc_name.toLowerCase().includes(id.toLowerCase())
-    );
-    return found ? enrichPHC(found) : enrichPHC(allPhcs[0]);
-  }, [allPhcs, id]);
-
-  const facilityAlerts = useMemo(() => {
-    return computeAlerts(allPhcs).filter((a) => a.phc_id === currentPHC.phc_id);
-  }, [allPhcs, currentPHC]);
-
-  const relevantTransfers = useMemo(() => {
-    return computeRedistributions(allPhcs).filter(
-      (r) => r.destination_phc_id === currentPHC.phc_id || r.source_phc_id === currentPHC.phc_id
-    );
-  }, [allPhcs, currentPHC]);
-
-  // Selected medicine for burn curve preview
-  const [selectedMedicine, setSelectedMedicine] = useState<string>(
-    currentPHC.inventory[0]?.medicine_name || "ORS Sachets"
-  );
-
-  const selectedItem = currentPHC.enriched_inventory.find(
-    (i) => i.medicine_name === selectedMedicine
-  ) || currentPHC.enriched_inventory[0];
-
-  // 7-day trajectory data points
-  const trajectory = useMemo(() => {
-    if (!selectedItem) return [];
-    const points = [];
-    for (let day = 0; day <= 7; day++) {
-      const remaining = Math.max(
-        0,
-        Math.round(selectedItem.quantity - selectedItem.daily_consumption_rate * day)
-      );
-      points.push({
-        dayIndex: day,
-        label: day === 0 ? "Today" : `Day +${day}`,
-        remaining,
-        threshold: selectedItem.reorder_threshold,
-      });
-    }
-    return points;
-  }, [selectedItem]);
-
-  const maxVal = Math.max(
-    selectedItem?.quantity || 100,
-    (selectedItem?.reorder_threshold || 50) * 1.5,
-    50
-  );
-
   return (
-    <div className="space-y-6 pb-12">
-      {/* Back button and facility switcher bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#626875] hover:text-[#111318] transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to District Overview</span>
-        </Link>
-
-        {/* Facility Dropdown Switcher */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-[#626875]">Switch Facility:</span>
-          <select
-            value={currentPHC.phc_id}
-            onChange={(e) => router.push(`/phc/${e.target.value}`)}
-            className="bg-white border border-[#E7E9EE] rounded-full px-4 py-1.5 text-xs font-bold text-[#111318] shadow-xs focus:outline-none focus:ring-1 focus:ring-[#111318]"
-          >
-            {enrichedList.map((p) => (
-              <option key={p.phc_id} value={p.phc_id}>
-                {p.phc_name} ({p.district}) — {p.status.toUpperCase()}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Facility Header Card */}
-      <div className="bg-white rounded-[24px] p-6 lg:p-8 border border-[#E7E9EE] shadow-sm">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-[#F8F8FA] border border-[#E7E9EE] text-[#111318]">
-                {currentPHC.phc_id}
+    <main className="flex-1 w-full">
+      <div className="flex flex-col w-full">
+        {/* Top Breadcrumb & Actions Bar */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+          <div className="flex flex-col gap-space-xs">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 font-label-md text-label-md text-text-secondary hover:text-text-primary transition-colors group mb-1"
+            >
+              <span className="material-symbols-outlined text-base transition-transform group-hover:-translate-x-1">
+                arrow_back
               </span>
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide ${
-                  currentPHC.status === "critical"
-                    ? "bg-[#FDE8E8] text-[#D93838]"
-                    : currentPHC.status === "low"
-                    ? "bg-[#FFF4D6] text-[#E0A000]"
-                    : "bg-[#E5F6EE] text-[#248A54]"
-                }`}
-              >
-                {currentPHC.status} Status
-              </span>
-              <span className="text-xs text-[#8D93A1]">
-                GPS: {currentPHC.latitude}° N, {currentPHC.longitude}° E
+              All PHCs
+            </Link>
+            <div className="flex flex-wrap items-center gap-space-sm">
+              <h1 className="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+                Rampur PHC
+              </h1>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-critical animate-pulse"></span>
+                Critical
               </span>
             </div>
-
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111318] tracking-tight">
-              {currentPHC.phc_name}
-            </h1>
-
-            <div className="flex items-center gap-2 text-sm text-[#626875]">
-              <MapPin className="w-4 h-4 text-[#0F8F88]" />
-              <span>
-                {currentPHC.block} Block • {currentPHC.district} District • Uttar Pradesh
-              </span>
-            </div>
+            <p className="font-body-sm text-body-sm text-text-secondary">
+              {id.toUpperCase()} <span className="text-text-muted">·</span> Sitapur District{" "}
+              <span className="text-text-muted">·</span> Telemetry synced 4 mins ago
+            </p>
           </div>
-
-          {/* Quick Header Actions */}
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
+          {/* Action Buttons Cluster */}
+          <div className="flex items-center gap-space-sm self-start md:self-auto">
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-2 px-space-md py-2.5 rounded-full bg-card-surface text-text-primary font-label-md text-label-md shadow-[0_4px_14px_rgba(17,19,24,0.04)] hover:bg-surface-muted transition-all cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-lg">download</span>
+              Export summary
+            </button>
             <Link
               href="/redistributions"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#111318] text-white text-xs font-bold hover:bg-[#252830] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-space-md py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-action-hover transition-all"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#0F8F88]" />
-              <span>Request Rebalancing</span>
-            </Link>
-
-            <Link
-              href="/alerts"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#F8F8FA] text-[#111318] text-xs font-bold border border-[#E7E9EE] hover:bg-[#EDEEF0] transition-colors"
-            >
-              <ShieldAlert className="w-3.5 h-3.5 text-[#D93838]" />
-              <span>Active Alerts ({facilityAlerts.length})</span>
+              View transfer
+              <span className="material-symbols-outlined text-lg">arrow_forward</span>
             </Link>
           </div>
         </div>
 
-        {/* Operational Indicators Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-[#E7E9EE]">
-          {/* Bed Occupancy */}
-          <div className="bg-[#F8F8FA] p-4 rounded-xl border border-[#E7E9EE]">
-            <div className="flex items-center justify-between text-xs text-[#626875] mb-1 font-medium">
-              <span className="flex items-center gap-1.5">
-                <Bed className="w-3.5 h-3.5 text-[#0F8F88]" /> Bed Occupancy
-              </span>
+        {/* Critical AI Operational Callout Banner */}
+        <div className="relative overflow-hidden rounded-2xl bg-red-tint p-space-md sm:p-space-lg mb-space-lg shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+          <div className="flex items-start md:items-center gap-space-md">
+            <div className="w-10 h-10 rounded-full bg-card-surface flex items-center justify-center shrink-0 shadow-sm text-red-critical">
               <span
-                className={`font-bold ${
-                  currentPHC.bed_occupancy_pct > 90 ? "text-[#D93838]" : "text-[#111318]"
-                }`}
+                className="material-symbols-outlined text-xl"
+                style={{ fontVariationSettings: "'FILL' 1" }}
               >
-                {currentPHC.bed_occupancy_pct}%
+                auto_awesome
               </span>
             </div>
-            <div className="text-xl font-extrabold text-[#111318]">
-              {currentPHC.beds_occupied} / {currentPHC.beds_total}
-              <span className="text-xs font-normal text-[#626875] ml-1">beds in use</span>
-            </div>
-            <div className="w-full bg-[#E7E9EE] rounded-full h-1.5 mt-2 overflow-hidden">
-              <div
-                className={`h-full rounded-full ${
-                  currentPHC.bed_occupancy_pct > 90
-                    ? "bg-[#D93838]"
-                    : currentPHC.bed_occupancy_pct > 75
-                    ? "bg-[#E0A000]"
-                    : "bg-[#248A54]"
-                }`}
-                style={{ width: `${currentPHC.bed_occupancy_pct}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Staff Attendance */}
-          <div className="bg-[#F8F8FA] p-4 rounded-xl border border-[#E7E9EE]">
-            <div className="flex items-center justify-between text-xs text-[#626875] mb-1 font-medium">
-              <span className="flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5 text-[#0F8F88]" /> Clinical Staff
-              </span>
-              <span className="font-bold text-[#111318]">
-                {currentPHC.staff_attendance_pct}%
-              </span>
-            </div>
-            <div className="text-xl font-extrabold text-[#111318]">
-              {currentPHC.staff_present} / {currentPHC.staff_total}
-              <span className="text-xs font-normal text-[#626875] ml-1">on duty today</span>
-            </div>
-            <div className="w-full bg-[#E7E9EE] rounded-full h-1.5 mt-2 overflow-hidden">
-              <div
-                className={`h-full rounded-full ${
-                  currentPHC.staff_attendance_pct < 70 ? "bg-[#E0A000]" : "bg-[#248A54]"
-                }`}
-                style={{ width: `${currentPHC.staff_attendance_pct}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Critical Items Count */}
-          <div className="bg-[#F8F8FA] p-4 rounded-xl border border-[#E7E9EE]">
-            <div className="flex items-center justify-between text-xs text-[#626875] mb-1 font-medium">
-              <span className="flex items-center gap-1.5">
-                <Pill className="w-3.5 h-3.5 text-[#D93838]" /> Critical Deficits
-              </span>
-              <span className="font-bold text-[#D93838]">
-                {currentPHC.critical_items.length} items
-              </span>
-            </div>
-            <div className="text-xl font-extrabold text-[#D93838]">
-              {currentPHC.critical_items.length > 0 ? (
-                currentPHC.critical_items.join(", ")
-              ) : (
-                <span className="text-[#248A54]">None &ge; Safe</span>
-              )}
-            </div>
-            <div className="text-[10px] text-[#626875] mt-1 font-medium">
-              At or below reorder threshold
-            </div>
-          </div>
-
-          {/* Telemetry Status */}
-          <div className="bg-[#F8F8FA] p-4 rounded-xl border border-[#E7E9EE]">
-            <div className="flex items-center justify-between text-xs text-[#626875] mb-1 font-medium">
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#0F8F88]" /> Last Sensor Sync
-              </span>
-              <span className="font-bold text-[#248A54]">Active</span>
-            </div>
-            <div className="text-xl font-extrabold text-[#111318]">
-              {new Date(currentPHC.last_updated).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </div>
-            <div className="text-[10px] text-[#626875] mt-1 font-medium">
-              Deterministic hourly cycle
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Two Column Grid: Stock Table (Left) + Burn Trajectory & AI Operations (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left 7 Cols: Medicine Inventory Table */}
-        <div className="lg:col-span-7 bg-white rounded-[24px] p-6 border border-[#E7E9EE] shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-bold text-[#111318]">Essential Drug Inventory</h2>
-              <p className="text-xs text-[#626875]">
-                Real-time stock level, burn rate, and stockout forecast
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="font-label-sm text-label-sm uppercase tracking-wider text-red-critical">
+                  Action needed today
+                </span>
+                <span className="inline-block w-1 h-1 rounded-full bg-red-critical"></span>
+                <span className="font-body-sm text-body-sm text-text-secondary">
+                  Stockout forecast
+                </span>
+              </div>
+              <p className="font-body-md text-body-md text-text-primary font-medium">
+                ORS Sachets are expected to run out in{" "}
+                <span className="font-bold text-red-critical">2.5 days</span>. Maholi PHC has
+                suitable surplus (+120 units available).
               </p>
             </div>
-            <span className="text-xs font-semibold text-[#8D93A1]">5 Monitored Medicines</span>
+          </div>
+          <Link
+            href="/redistributions"
+            className="inline-flex items-center justify-center gap-1.5 px-space-md py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-action-hover whitespace-nowrap self-start md:self-auto shrink-0 shadow-sm transition-all"
+          >
+            Review transfer
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </Link>
+        </div>
+
+        {/* KPI Metrics Row (3 Elevated Cards) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-space-lg">
+          {/* Card 1: Bed Occupancy */}
+          <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-space-xs">
+                <span className="font-label-md text-label-md text-text-muted">Bed occupancy</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+                  90%
+                </span>
+              </div>
+              <div className="flex items-baseline gap-2 mb-space-md">
+                <span className="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+                  18{" "}
+                  <span className="text-text-muted font-normal text-headline-sm">/ 20</span>
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="w-full h-2 rounded-full bg-surface-muted overflow-hidden mb-space-xs">
+                <div className="h-full bg-red-critical rounded-full" style={{ width: "90%" }}></div>
+              </div>
+              <div className="flex items-center justify-between text-text-secondary font-body-sm text-body-sm">
+                <span>2 beds available</span>
+                <span className="text-red-critical font-medium">Near peak capacity</span>
+              </div>
+            </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-[#E7E9EE] text-[#8D93A1] uppercase font-bold text-[10px] tracking-wider">
-                  <th className="py-3 px-2">Medicine</th>
-                  <th className="py-3 px-2 text-right">In Stock</th>
-                  <th className="py-3 px-2 text-right">Burn Rate</th>
-                  <th className="py-3 px-2 text-right">Threshold</th>
-                  <th className="py-3 px-2 text-right">Coverage</th>
-                  <th className="py-3 px-2 text-center">Status</th>
-                  <th className="py-3 px-2 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#F3F4F6]">
-                {currentPHC.enriched_inventory.map((item) => {
-                  const isSelected = selectedMedicine === item.medicine_name;
-                  const isCrit = item.item_status === "critical";
-                  const isLow = item.item_status === "low";
+          {/* Card 2: Staff Present */}
+          <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-space-xs">
+                <span className="font-label-md text-label-md text-text-muted">Staff present</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-tint text-text-primary font-label-sm text-label-sm">
+                  67%
+                </span>
+              </div>
+              <div className="flex items-baseline gap-2 mb-space-md">
+                <span className="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+                  4{" "}
+                  <span className="text-text-muted font-normal text-headline-sm">/ 6</span>
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="w-full h-2 rounded-full bg-surface-muted overflow-hidden mb-space-xs">
+                <div
+                  className="h-full bg-amber-accent rounded-full"
+                  style={{ width: "67%" }}
+                ></div>
+              </div>
+              <div className="flex items-center justify-between text-text-secondary font-body-sm text-body-sm">
+                <span>2 medical staff on leave</span>
+                <span className="text-text-secondary">Rostered relief requested</span>
+              </div>
+            </div>
+          </div>
 
-                  return (
-                    <tr
-                      key={item.medicine_name}
-                      onClick={() => setSelectedMedicine(item.medicine_name)}
-                      className={`cursor-pointer transition-colors ${
-                        isSelected ? "bg-[#F8F8FA] font-bold" : "hover:bg-[#F8F8FA]/60"
-                      }`}
-                    >
-                      <td className="py-3.5 px-2">
-                        <div className="font-bold text-[#111318]">{item.medicine_name}</div>
-                        {isSelected && (
-                          <span className="text-[10px] text-[#0F8F88] font-normal">
-                            Viewing chart &rarr;
-                          </span>
-                        )}
+          {/* Card 3: Items at Risk */}
+          <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-space-xs">
+                <span className="font-label-md text-label-md text-text-muted">Items at risk</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-red-critical"></span>
+              </div>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="font-headline-lg text-headline-lg text-red-critical tracking-tight">
+                  2
+                </span>
+                <span className="font-body-sm text-body-sm text-text-muted">
+                  below safe threshold
+                </span>
+              </div>
+              <p className="font-body-sm text-body-sm text-text-secondary mb-space-sm">
+                Critical burn trajectory detected
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+                <span className="material-symbols-outlined text-sm">warning</span>
+                ORS Sachets (2.5d)
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm">
+                <span className="material-symbols-outlined text-sm">warning</span>
+                Amoxicillin (2.7d)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content Layout (Two Columns: 65% / 35%) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          {/* LEFT COLUMN: Inventory Table & Forecast Chart (~65% width: 8 of 12 cols) */}
+          <div className="lg:col-span-8 flex flex-col gap-gutter">
+            {/* 1. Medicine Inventory Section */}
+            <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+                <div className="flex items-center gap-space-xs">
+                  <div className="w-8 h-8 rounded-full bg-blue-tint text-blue-info flex items-center justify-center">
+                    <span className="material-symbols-outlined text-lg">medication</span>
+                  </div>
+                  <div>
+                    <h2 className="font-headline-sm text-headline-sm text-text-primary tracking-tight">
+                      Medicine Inventory
+                    </h2>
+                    <span className="font-body-sm text-body-sm text-text-muted">
+                      District formulary tier 1 telemetry
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-surface-muted text-text-secondary font-label-sm text-label-sm">
+                    All 5 tracked items
+                  </span>
+                </div>
+              </div>
+
+              {/* Inventory Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="text-text-muted font-label-sm text-label-sm">
+                      <th className="pb-3 pr-4 font-semibold">Medicine Name</th>
+                      <th className="pb-3 px-3 font-semibold text-right">Current Stock</th>
+                      <th className="pb-3 px-3 font-semibold text-right">Daily Burn</th>
+                      <th className="pb-3 px-3 font-semibold text-right">Reorder Level</th>
+                      <th className="pb-3 px-3 font-semibold text-right">Coverage</th>
+                      <th className="pb-3 pl-3 font-semibold text-right">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y-0 text-text-primary font-body-md text-body-md">
+                    {/* ORS Sachets (Critical) */}
+                    <tr className="bg-red-tint rounded-xl transition-colors">
+                      <td className="py-3 px-3 font-medium rounded-l-xl flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-critical shrink-0"></span>
+                        ORS Sachets
                       </td>
-                      <td className="py-3.5 px-2 text-right font-mono font-bold text-[#111318]">
-                        {item.quantity}
+                      <td className="py-3 px-3 text-right font-medium">20 units</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">8 / day</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">30 units</td>
+                      <td className="py-3 px-3 text-right font-semibold text-red-critical">
+                        2.5 days
                       </td>
-                      <td className="py-3.5 px-2 text-right font-mono text-[#626875]">
-                        {item.daily_consumption_rate}/day
-                      </td>
-                      <td className="py-3.5 px-2 text-right font-mono text-[#8D93A1]">
-                        {item.reorder_threshold}
-                      </td>
-                      <td className="py-3.5 px-2 text-right font-mono font-bold">
-                        <span
-                          className={
-                            isCrit
-                              ? "text-[#D93838]"
-                              : isLow
-                              ? "text-[#E0A000]"
-                              : "text-[#248A54]"
-                          }
-                        >
-                          {item.coverage_label}
+                      <td className="py-3 pr-3 text-right rounded-r-xl">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-card-surface text-red-critical font-label-sm text-label-sm shadow-sm">
+                          Critical
                         </span>
-                      </td>
-                      <td className="py-3.5 px-2 text-center">
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
-                            isCrit
-                              ? "bg-[#FDE8E8] text-[#D93838]"
-                              : isLow
-                              ? "bg-[#FFF4D6] text-[#E0A000]"
-                              : "bg-[#E5F6EE] text-[#248A54]"
-                          }`}
-                        >
-                          {item.item_status}
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-2 text-right">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedMedicine(item.medicine_name);
-                          }}
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${
-                            isSelected
-                              ? "bg-[#111318] text-white"
-                              : "bg-[#F8F8FA] text-[#626875] border border-[#E7E9EE] hover:bg-[#EDEEF0]"
-                          }`}
-                        >
-                          Forecast
-                        </button>
                       </td>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                    {/* Spacer row */}
+                    <tr className="h-1.5">
+                      <td colSpan={6}></td>
+                    </tr>
+                    {/* Amoxicillin (Critical) */}
+                    <tr className="bg-red-tint rounded-xl transition-colors">
+                      <td className="py-3 px-3 font-medium rounded-l-xl flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-critical shrink-0"></span>
+                        Amoxicillin 250mg
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium">40 units</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">15 / day</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">50 units</td>
+                      <td className="py-3 px-3 text-right font-semibold text-red-critical">
+                        2.7 days
+                      </td>
+                      <td className="py-3 pr-3 text-right rounded-r-xl">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-card-surface text-red-critical font-label-sm text-label-sm shadow-sm">
+                          Critical
+                        </span>
+                      </td>
+                    </tr>
+                    {/* Spacer row */}
+                    <tr className="h-1.5">
+                      <td colSpan={6}></td>
+                    </tr>
+                    {/* Insulin (Healthy) */}
+                    <tr className="hover:bg-workspace-surface rounded-xl transition-colors">
+                      <td className="py-3 px-3 font-medium rounded-l-xl flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-green-healthy shrink-0"></span>
+                        Insulin
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium">56 vials</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">4 / day</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">25 vials</td>
+                      <td className="py-3 px-3 text-right font-medium text-text-primary">
+                        14.0 days
+                      </td>
+                      <td className="py-3 pr-3 text-right rounded-r-xl">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">
+                          Healthy
+                        </span>
+                      </td>
+                    </tr>
+                    {/* Spacer row */}
+                    <tr className="h-1.5">
+                      <td colSpan={6}></td>
+                    </tr>
+                    {/* Paracetamol 500mg (Healthy) */}
+                    <tr className="hover:bg-workspace-surface rounded-xl transition-colors">
+                      <td className="py-3 px-3 font-medium rounded-l-xl flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-green-healthy shrink-0"></span>
+                        Paracetamol 500mg
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium">210 strips</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">18 / day</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">80 strips</td>
+                      <td className="py-3 px-3 text-right font-medium text-text-primary">
+                        11.7 days
+                      </td>
+                      <td className="py-3 pr-3 text-right rounded-r-xl">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">
+                          Healthy
+                        </span>
+                      </td>
+                    </tr>
+                    {/* Spacer row */}
+                    <tr className="h-1.5">
+                      <td colSpan={6}></td>
+                    </tr>
+                    {/* IV Fluids (Healthy) */}
+                    <tr className="hover:bg-workspace-surface rounded-xl transition-colors">
+                      <td className="py-3 px-3 font-medium rounded-l-xl flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-green-healthy shrink-0"></span>
+                        IV Fluids
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium">46 bags</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">5 / day</td>
+                      <td className="py-3 px-3 text-right text-text-secondary">20 bags</td>
+                      <td className="py-3 px-3 text-right font-medium text-text-primary">
+                        9.2 days
+                      </td>
+                      <td className="py-3 pr-3 text-right rounded-r-xl">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-tint text-green-healthy font-label-sm text-label-sm">
+                          Healthy
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 2. ORS Forecast & Burn Trajectory Card */}
+            <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+                <div className="flex items-center gap-space-xs">
+                  <div className="w-8 h-8 rounded-full bg-red-tint text-red-critical flex items-center justify-center">
+                    <span className="material-symbols-outlined text-lg">trending_down</span>
+                  </div>
+                  <div>
+                    <h2 className="font-headline-sm text-headline-sm text-text-primary tracking-tight">
+                      ORS Forecast &amp; Burn Trajectory
+                    </h2>
+                    <span className="font-body-sm text-body-sm text-text-secondary">
+                      4-day projection based on current 8-unit daily burn
+                    </span>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-tint text-red-critical font-label-sm text-label-sm self-start sm:self-auto">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-critical"></span>
+                  Predicted stockout in ~60 hours
+                </span>
+              </div>
+
+              {/* SVG Burn Trajectory Chart */}
+              <div className="w-full overflow-hidden">
+                <svg
+                  className="w-full h-auto select-none"
+                  fill="none"
+                  viewBox="0 0 740 260"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="dangerGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                      <stop offset="0%" stopColor="#E05252" stopOpacity="0.18"></stop>
+                      <stop offset="100%" stopColor="#E05252" stopOpacity="0.01"></stop>
+                    </linearGradient>
+                  </defs>
+                  {/* Background Grid Lines */}
+                  <line stroke="#F3F4F6" strokeWidth="1" x1="60" x2="710" y1="40" y2="40"></line>
+                  <line stroke="#F3F4F6" strokeWidth="1" x1="60" x2="710" y1="100" y2="100"></line>
+                  <line stroke="#F3F4F6" strokeWidth="1" x1="60" x2="710" y1="160" y2="160"></line>
+                  <line stroke="#E7E9EE" strokeWidth="1" x1="60" x2="710" y1="210" y2="210"></line>
+                  {/* Y Axis Labels */}
+                  <text fill="#8D93A1" fontFamily="Manrope" fontSize="11" textAnchor="end" x="50" y="44">
+                    35 u
+                  </text>
+                  <text
+                    fill="#A07A08"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    fontWeight="600"
+                    textAnchor="end"
+                    x="50"
+                    y="66"
+                  >
+                    30 u
+                  </text>
+                  <text fill="#8D93A1" fontFamily="Manrope" fontSize="11" textAnchor="end" x="50" y="104">
+                    20 u
+                  </text>
+                  <text fill="#8D93A1" fontFamily="Manrope" fontSize="11" textAnchor="end" x="50" y="164">
+                    10 u
+                  </text>
+                  <text fill="#8D93A1" fontFamily="Manrope" fontSize="11" textAnchor="end" x="50" y="214">
+                    0 u
+                  </text>
+                  {/* Reorder Threshold Dashed Line (30 units = y:62) */}
+                  <line
+                    stroke="#F2C94C"
+                    strokeDasharray="4 4"
+                    strokeWidth="1.5"
+                    x1="60"
+                    x2="710"
+                    y1="62"
+                    y2="62"
+                  ></line>
+                  <rect fill="#FFF2BF" height="20" rx="10" width="128" x="580" y="48"></rect>
+                  <text
+                    fill="#A07A08"
+                    fontFamily="Manrope"
+                    fontSize="10"
+                    fontWeight="600"
+                    textAnchor="middle"
+                    x="644"
+                    y="62"
+                  >
+                    Reorder level (30 units)
+                  </text>
+                  {/* Danger Zone Shading below threshold to zero */}
+                  <polygon fill="url(#dangerGradient)" points="60,100 465,210 60,210"></polygon>
+                  {/* Trajectory Projection Line */}
+                  <line
+                    stroke="#E05252"
+                    strokeLinecap="round"
+                    strokeWidth="3"
+                    x1="60"
+                    x2="465"
+                    y1="100"
+                    y2="210"
+                  ></line>
+                  {/* Theoretical continued line into negative/deficit */}
+                  <line
+                    opacity="0.4"
+                    stroke="#E05252"
+                    strokeDasharray="3 3"
+                    strokeWidth="2"
+                    x1="465"
+                    x2="680"
+                    y1="210"
+                    y2="245"
+                  ></line>
+                  {/* Starting Point Dot (Today: 20 units) */}
+                  <circle cx="60" cy="100" fill="#E05252" r="5"></circle>
+                  <circle cx="60" cy="100" fill="#FFFFFF" r="2"></circle>
+                  {/* Stockout Point (Day 2.5) */}
+                  <circle cx="465" cy="210" fill="#E05252" r="6"></circle>
+                  <circle cx="465" cy="210" fill="#FFFFFF" r="3"></circle>
+                  {/* Pin Callout at Day 2.5 */}
+                  <g transform="translate(465, 140)">
+                    <line
+                      stroke="#E05252"
+                      strokeDasharray="2 2"
+                      strokeWidth="1.5"
+                      x1="0"
+                      x2="0"
+                      y1="22"
+                      y2="62"
+                    ></line>
+                    <rect
+                      fill="#111318"
+                      filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"
+                      height="34"
+                      rx="17"
+                      width="140"
+                      x="-70"
+                      y="-12"
+                    ></rect>
+                    <text
+                      fill="#FFFFFF"
+                      fontFamily="Manrope"
+                      fontSize="11"
+                      fontWeight="700"
+                      textAnchor="middle"
+                      x="0"
+                      y="4"
+                    >
+                      Predicted Stockout
+                    </text>
+                    <text
+                      fill="#E7F7EF"
+                      fontFamily="Manrope"
+                      fontSize="9.5"
+                      textAnchor="middle"
+                      x="0"
+                      y="16"
+                    >
+                      Day 2.5 · 0 units left
+                    </text>
+                  </g>
+                  {/* X Axis Points & Labels */}
+                  <text
+                    fill="#111318"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    fontWeight="600"
+                    textAnchor="middle"
+                    x="60"
+                    y="232"
+                  >
+                    Today
+                  </text>
+                  <line stroke="#8D93A1" strokeWidth="1" x1="222" x2="222" y1="208" y2="214"></line>
+                  <text
+                    fill="#8D93A1"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    textAnchor="middle"
+                    x="222"
+                    y="232"
+                  >
+                    Day 1
+                  </text>
+                  <line stroke="#8D93A1" strokeWidth="1" x1="384" x2="384" y1="208" y2="214"></line>
+                  <text
+                    fill="#8D93A1"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    textAnchor="middle"
+                    x="384"
+                    y="232"
+                  >
+                    Day 2
+                  </text>
+                  <line stroke="#E05252" strokeWidth="2" x1="465" x2="465" y1="208" y2="216"></line>
+                  <text
+                    fill="#E05252"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    fontWeight="700"
+                    textAnchor="middle"
+                    x="465"
+                    y="232"
+                  >
+                    Day 2.5 (Zero)
+                  </text>
+                  <line stroke="#8D93A1" strokeWidth="1" x1="546" x2="546" y1="208" y2="214"></line>
+                  <text
+                    fill="#8D93A1"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    textAnchor="middle"
+                    x="546"
+                    y="232"
+                  >
+                    Day 3
+                  </text>
+                  <line stroke="#8D93A1" strokeWidth="1" x1="708" x2="708" y1="208" y2="214"></line>
+                  <text
+                    fill="#8D93A1"
+                    fontFamily="Manrope"
+                    fontSize="11"
+                    textAnchor="middle"
+                    x="708"
+                    y="232"
+                  >
+                    Day 4
+                  </text>
+                </svg>
+              </div>
+
+              <div className="mt-space-sm pt-space-sm flex flex-wrap items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm">
+                <div className="flex items-center gap-4">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-3 h-0.5 bg-red-critical"></span> Current burn slope (-8u /
+                    day)
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-3 h-0.5 border-b border-dashed border-amber-accent"></span>{" "}
+                    Buffer minimum (30u)
+                  </span>
+                </div>
+                <span className="font-medium text-text-primary">
+                  Recommended order: +100 to +120 units
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Active Facility Alerts */}
-          {facilityAlerts.length > 0 && (
-            <div className="pt-4 border-t border-[#E7E9EE] space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#D93838] flex items-center gap-1.5">
-                <AlertTriangle className="w-3.5 h-3.5" />
-                Active Alerts for {currentPHC.phc_name}
-              </h3>
-              <div className="space-y-2">
-                {facilityAlerts.map((a) => (
-                  <div
-                    key={a.id}
-                    className="p-3 rounded-xl bg-[#FDE8E8]/40 border border-[#FDE8E8] text-xs space-y-1"
+          {/* RIGHT COLUMN: AI Summary, Timeline & Facility Specs (~35% width: 4 of 12 cols) */}
+          <div className="lg:col-span-4 flex flex-col gap-gutter">
+            {/* 1. AI Operational Summary Card */}
+            <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)]">
+              <div className="flex items-center gap-2 mb-space-md">
+                <div className="w-7 h-7 rounded-full bg-teal-tint text-teal-accent flex items-center justify-center">
+                  <span
+                    className="material-symbols-outlined text-base"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
                   >
-                    <div className="font-bold text-[#D93838]">{a.title}</div>
-                    <div className="text-[11px] text-[#626875] leading-relaxed">{a.description}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Right 5 Cols: Forecast Burn Trajectory Chart + AI Operations */}
-        <div className="lg:col-span-5 space-y-6">
-          {/* Burn Trajectory Visualizer */}
-          <div className="bg-white rounded-[24px] p-6 border border-[#E7E9EE] shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0F8F88]">
-                  7-Day Forward Projection
-                </span>
-                <h3 className="font-extrabold text-base text-[#111318]">
-                  {selectedMedicine} Burn Trajectory
-                </h3>
-              </div>
-              <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#F8F8FA] border border-[#E7E9EE]">
-                {selectedItem.quantity} units left
-              </span>
-            </div>
-
-            {/* Trajectory Bar Visualizer */}
-            <div className="bg-[#F8F8FA] p-4 rounded-xl border border-[#E7E9EE] space-y-3">
-              <div className="flex items-center justify-between text-[11px] text-[#626875]">
-                <span>Safe Threshold: {selectedItem.reorder_threshold} units</span>
-                <span className="text-[#D93838] font-bold">
-                  Depletes: ~{selectedItem.coverage_label}
-                </span>
-              </div>
-
-              <div className="h-40 flex items-end justify-between gap-2 pt-4 px-2">
-                {trajectory.map((point) => {
-                  const heightPct = Math.min(100, Math.round((point.remaining / maxVal) * 100));
-                  const isBelowThreshold = point.remaining <= point.threshold;
-                  const isZero = point.remaining === 0;
-
-                  return (
-                    <div
-                      key={point.dayIndex}
-                      className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group"
-                    >
-                      <span className="text-[9px] font-mono text-[#8D93A1] group-hover:text-[#111318] transition-colors">
-                        {point.remaining}
-                      </span>
-                      <div
-                        className={`w-full rounded-t-md transition-all ${
-                          isZero
-                            ? "bg-gray-300 h-1"
-                            : isBelowThreshold
-                            ? "bg-[#D93838]"
-                            : "bg-[#0F8F88]"
-                        }`}
-                        style={{ height: `${Math.max(4, heightPct)}%` }}
-                      />
-                      <span className="text-[9px] font-bold text-[#626875]">
-                        {point.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="flex items-center justify-between text-[10px] text-[#8D93A1] pt-2 border-t border-[#E7E9EE]">
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#0F8F88]" /> Above Threshold
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#D93838]" /> Below Threshold
-                </span>
-              </div>
-            </div>
-
-            {/* AI Operational Guidance */}
-            <div className="p-4 rounded-xl bg-[#E7F7F5] border border-[#0F8F88]/20 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-extrabold text-[#0F8F88]">
-                <Sparkles className="w-4 h-4" />
-                <span>AI Operational Facility Summary</span>
-              </div>
-              <p className="text-xs text-[#111318] leading-relaxed">
-                {currentPHC.status === "critical"
-                  ? `${currentPHC.phc_name} requires urgent supply replenishment. At the current daily burn of ${selectedItem.daily_consumption_rate} units/day, existing stock of ${selectedItem.medicine_name} will deplete in ${selectedItem.coverage_label}. Automated redistribution plan #TR-102 recommends sourcing stock from neighboring surplus nodes.`
-                  : `${currentPHC.phc_name} is operating within normal parameters. Inventory buffers exceed the 7-day safety threshold across monitored medicines.`}
-              </p>
-            </div>
-
-            {/* Relevant Transfer recommendations for this facility */}
-            {relevantTransfers.length > 0 && (
-              <div className="space-y-2 pt-2">
-                <div className="text-xs font-bold text-[#111318]">
-                  Available Coordinated Transfers
+                    auto_awesome
+                  </span>
                 </div>
-                {relevantTransfers.slice(0, 2).map((t) => (
-                  <div
-                    key={t.id}
-                    className="p-3 rounded-xl bg-[#F8F8FA] border border-[#E7E9EE] text-xs space-y-1.5"
-                  >
-                    <div className="flex items-center justify-between font-bold">
-                      <span className="text-[#111318]">{t.medicine_name}</span>
-                      <span className="text-[#0F8F88]">Transfer {t.quantity} units</span>
-                    </div>
-                    <div className="text-[11px] text-[#626875]">
-                      From: <span className="font-semibold text-[#111318]">{t.source_phc_name}</span> &rarr;{" "}
-                      To: <span className="font-semibold text-[#111318]">{t.destination_phc_name}</span>
-                    </div>
-                    <Link
-                      href="/redistributions"
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0F8F88] hover:underline pt-1"
-                    >
-                      <span>Authorize in Rebalancing Panel</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                ))}
+                <h2 className="font-headline-sm text-headline-sm text-text-primary tracking-tight">
+                  AI Operational Summary
+                </h2>
               </div>
-            )}
+              <div className="flex flex-col gap-space-sm">
+                {/* Bullet 1 */}
+                <div className="p-space-sm rounded-xl bg-workspace-surface flex items-start gap-space-xs">
+                  <div className="w-6 h-6 rounded-full bg-red-tint text-red-critical flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-sm">priority_high</span>
+                  </div>
+                  <div>
+                    <p className="font-label-sm text-label-sm text-text-primary mb-0.5">
+                      Urgent ORS Shortage
+                    </p>
+                    <p className="font-body-sm text-body-sm text-text-secondary">
+                      Current burn rate (8 units/day) depletes reserves by Thursday afternoon
+                      without transfer.
+                    </p>
+                  </div>
+                </div>
+                {/* Bullet 2 */}
+                <div className="p-space-sm rounded-xl bg-workspace-surface flex items-start gap-space-xs">
+                  <div className="w-6 h-6 rounded-full bg-amber-tint text-text-primary flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-sm">hotel</span>
+                  </div>
+                  <div>
+                    <p className="font-label-sm text-label-sm text-text-primary mb-0.5">
+                      High Bed Occupancy
+                    </p>
+                    <p className="font-body-sm text-body-sm text-text-secondary">
+                      18 of 20 beds occupied (90%). Inpatient intake should coordinate with Maholi
+                      PHC if surge exceeds 2 beds.
+                    </p>
+                  </div>
+                </div>
+                {/* Bullet 3 */}
+                <div className="p-space-sm rounded-xl bg-workspace-surface flex items-start gap-space-xs">
+                  <div className="w-6 h-6 rounded-full bg-blue-tint text-blue-info flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-sm">badge</span>
+                  </div>
+                  <div>
+                    <p className="font-label-sm text-label-sm text-text-primary mb-0.5">
+                      Reduced Staffing
+                    </p>
+                    <p className="font-body-sm text-body-sm text-text-secondary">
+                      2 of 6 medical staff on scheduled leave; triage throughput currently operating
+                      at 67% capacity.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Attention Timeline Card */}
+            <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)]">
+              <div className="flex items-center justify-between mb-space-md">
+                <div>
+                  <h2 className="font-headline-sm text-headline-sm text-text-primary tracking-tight">
+                    Attention Timeline
+                  </h2>
+                  <span className="font-body-sm text-body-sm text-text-muted">
+                    Predicted critical milestones
+                  </span>
+                </div>
+                <span className="material-symbols-outlined text-text-muted">schedule</span>
+              </div>
+              <div className="relative pl-6 space-y-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-surface-muted">
+                {/* Step 1 (Today) */}
+                <div className="relative">
+                  <div className="absolute -left-6 top-1 w-4 h-4 rounded-full bg-card-surface flex items-center justify-center">
+                    <span className="w-2.5 h-2.5 rounded-full bg-text-primary"></span>
+                  </div>
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-label-sm text-label-sm text-text-primary">Today</span>
+                    <span className="font-body-sm text-body-sm text-text-muted">10:00 IST</span>
+                  </div>
+                  <p className="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                    <span className="font-medium text-text-primary">20 ORS units remaining</span> ·
+                    Baseline telemetry verified with PHC storekeeper.
+                  </p>
+                </div>
+                {/* Step 2 (In 2.5 Days) */}
+                <div className="relative">
+                  <div className="absolute -left-6 top-1 w-4 h-4 rounded-full bg-card-surface flex items-center justify-center">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-critical animate-pulse"></span>
+                  </div>
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-label-sm text-label-sm text-red-critical">
+                      In ~60 Hours (Day 2.5)
+                    </span>
+                    <span className="font-body-sm text-body-sm text-red-critical font-medium">
+                      Critical
+                    </span>
+                  </div>
+                  <p className="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                    <span className="font-medium text-text-primary">Projected zero stock</span> ·
+                    Clinical stockout imminent under steady admission rate.
+                  </p>
+                </div>
+                {/* Step 3 (Recommended Action) */}
+                <div className="relative">
+                  <div className="absolute -left-6 top-1 w-4 h-4 rounded-full bg-card-surface flex items-center justify-center">
+                    <span className="w-2.5 h-2.5 rounded-full bg-teal-accent"></span>
+                  </div>
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-label-sm text-label-sm text-teal-accent">
+                      Recommended Action
+                    </span>
+                    <span className="font-body-sm text-body-sm text-text-muted">Before 14:00</span>
+                  </div>
+                  <p className="font-body-sm text-body-sm text-text-secondary mt-0.5 mb-2">
+                    <span className="font-medium text-text-primary">
+                      Transfer 120 ORS from Maholi
+                    </span>{" "}
+                    · Restores 17.5 days buffer.
+                  </p>
+                  <Link
+                    href="/redistributions"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-tint text-teal-accent font-label-sm text-label-sm hover:bg-surface-muted transition-colors"
+                  >
+                    <span>View dispatch plan</span>
+                    <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Facility Details Card */}
+            <div className="bg-card-surface rounded-2xl p-space-lg shadow-[0_18px_45px_rgba(17,19,24,0.06)]">
+              <h2 className="font-headline-sm text-headline-sm text-text-primary tracking-tight mb-space-md">
+                Facility Information
+              </h2>
+              <div className="flex flex-col gap-3 font-body-sm text-body-sm">
+                <div className="flex items-center justify-between pb-2 border-b border-workspace-surface">
+                  <span className="text-text-muted">District Sector</span>
+                  <span className="font-medium text-text-primary">Sitapur, Sector 3</span>
+                </div>
+                <div className="flex items-center justify-between pb-2 border-b border-workspace-surface">
+                  <span className="text-text-muted">Facility Code</span>
+                  <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-surface-muted text-text-primary">
+                    PHC-SIT-001
+                  </span>
+                </div>
+                <div className="flex items-center justify-between pb-2 border-b border-workspace-surface">
+                  <span className="text-text-muted">Medical Officer</span>
+                  <span className="font-medium text-text-primary">Dr. A. Verma</span>
+                </div>
+                <div className="flex items-center justify-between pb-2 border-b border-workspace-surface">
+                  <span className="text-text-muted">Telemetry Status</span>
+                  <span className="inline-flex items-center gap-1.5 text-green-healthy font-medium">
+                    <span className="w-2 h-2 rounded-full bg-green-healthy animate-ping"></span>
+                    Live Synced (10:12 IST)
+                  </span>
+                </div>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-text-muted">Facility Grade</span>
+                  <span className="font-medium text-text-primary">Type-B Primary Center</span>
+                </div>
+              </div>
+              {/* Quick Contacts Buttons */}
+              <div className="grid grid-cols-2 gap-2 mt-space-md pt-2">
+                <button
+                  className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-workspace-surface hover:bg-surface-muted text-text-primary font-label-sm text-label-sm transition-colors cursor-pointer"
+                  type="button"
+                >
+                  <span className="material-symbols-outlined text-base text-text-secondary">
+                    call
+                  </span>
+                  Call MOIC
+                </button>
+                <button
+                  className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-workspace-surface hover:bg-surface-muted text-text-primary font-label-sm text-label-sm transition-colors cursor-pointer"
+                  type="button"
+                >
+                  <span className="material-symbols-outlined text-base text-text-secondary">
+                    radio
+                  </span>
+                  VHF Grid
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
