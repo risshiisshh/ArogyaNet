@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0F8F88" />
+    <title>ArogyaNet — Civic Health Resilience Operations Platform</title>
+    <meta
+      name="description"
+      content="Real-time public health telemetry, AI-guided formulary rebalancing, and sovereign healthcare resilience network."
+    />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ArogyaNet — Civic Health Resilience Operations Platform" />
+    <meta
+      property="og:description"
+      content="Real-time public health telemetry, AI-guided formulary rebalancing, and sovereign healthcare resilience network."
+    />
+    <meta property="og:site_name" content="ArogyaNet" />
+    <meta property="og:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuA6qxmKbLaD7ThdwfscOxdOjF63CQFk_FBeIqnSNpqn7rDO_lxT0UCJmmSVlpc_EoIpSUfqcc9sfkpfGjuy-iNm8N-nQ6wX0TfCYfWhDZCGvGyDZgp3L_KplPcfWO3GNdm2N4KJp-aJS4ma5bFujR8YiYTBFjChaESBC2-4LlojmilI4vw6itMoos0Ic9T0NFb9f2irMN39ETLu_Fe3Fy_o7b9AWwzHYQCe2-eK8V4" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ArogyaNet — Civic Health Resilience Operations Platform" />
+    <meta
+      name="twitter:description"
+      content="Real-time public health telemetry, AI-guided formulary rebalancing, and sovereign healthcare resilience network."
+    />
+    <meta name="twitter:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuA6qxmKbLaD7ThdwfscOxdOjF63CQFk_FBeIqnSNpqn7rDO_lxT0UCJmmSVlpc_EoIpSUfqcc9sfkpfGjuy-iNm8N-nQ6wX0TfCYfWhDZCGvGyDZgp3L_KplPcfWO3GNdm2N4KJp-aJS4ma5bFujR8YiYTBFjChaESBC2-4LlojmilI4vw6itMoos0Ic9T0NFb9f2irMN39ETLu_Fe3Fy_o7b9AWwzHYQCe2-eK8V4" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Apply saved theme before first paint to prevent FOUC -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('arogyanet-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-app-bg min-h-screen text-text-primary antialiased font-body-md text-body-md">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

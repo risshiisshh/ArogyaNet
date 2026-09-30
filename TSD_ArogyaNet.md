@@ -5,19 +5,20 @@
 
 ## 1. System Overview
 
-ArogyaNet is a web-based dashboard application that reads PHC (Primary Health Centre) operational data, displays it visually, and uses the Gemini API to generate warnings and redistribution recommendations. For the hackathon MVP, it is a single web app with no separate backend server required unless the team chooses to add one — API calls to Gemini can be made directly from the frontend or through a thin backend layer for key security.
+ArogyaNet is a web-based dashboard application built with **React (Vite + TypeScript)** that reads PHC (Primary Health Centre) operational telemetry, displays it through interactive visual dashboards, and uses the Google Gemini API to generate real-time warnings, decision intelligence, and cross-facility redistribution recommendations. For the hackathon MVP, it operates as a high-performance Single Page Application (SPA) with deterministic telemetry fallback and live Gemini AI integration.
 
 ## 2. Tech Stack
 
 | Layer | Choice | Reason |
 |-------|--------|--------|
-| Frontend | Next.js (React) *or* Streamlit (Python) | Next.js for a polished custom look; Streamlit for maximum build speed if time is tight |
-| Styling | Tailwind CSS (if Next.js) | Fast, clean, consistent UI without custom design system work |
-| AI Layer | Google Gemini API (via Google AI Studio key) | Free tier available, strong reasoning over structured data, natural language generation |
-| Data Storage | Static CSV/JSON file (MVP) | No database setup needed; simplest path for a hackathon timeline |
-| Charts (optional) | Recharts (if Next.js) | Quick, clean line/bar charts for trend visualization |
-| Map (optional) | Static grid layout, or Google Maps Embed if time allows | Avoid full geolocation complexity unless trivial to add |
-| Hosting | Vercel (Next.js) or Streamlit Community Cloud | Free, fast deploy for demo purposes |
+| Frontend Core | React 19 + Vite + TypeScript | Blazing fast HMR, strict type safety, modular component architecture |
+| Routing | React Router v7 | Declarative client-side routing across all analytical views and detail pages |
+| Styling & Theme | Tailwind CSS v4 + Design System Tokens (CSS Custom Properties) | Tokenized colors, typography, system-wide dark mode support (`ThemeContext`) |
+| Interactive Components & Motion | Motion (`motion/react`) + GSAP | Rich physics-based animations (RubberSegment, StaggeredMenu, PromptBar) |
+| Icons & Typography | Google Material Symbols + Hugeicons + Manrope/Inter font families | Modern, high-density public health operational aesthetic |
+| AI Layer | Google Gemini API (`@google/genai` / REST) | Structured reasoning over live PHC telemetry, automated alerts, and natural language dialogue |
+| Data Model & Telemetry | Typed JSON records + in-memory reactive state | Zero database friction for MVP with realistic Sitapur district health network data |
+| Hosting | Vercel / Netlify / Cloudflare Pages | Instant global CDN distribution for static SPA assets |
 
 ## 3. Application Screens
 
@@ -79,5 +80,6 @@ Send the full network's inventory state to Gemini and ask it to identify surplus
 ## 8. Deployment Plan
 
 - Push to GitHub repo
-- Deploy via Vercel (Next.js) or Streamlit Cloud with environment variable for `GEMINI_API_KEY`
-- Test the deployed link at least once before the presentation, not just localhost
+- Build production bundle via `npm run build` (`tsc && vite build`)
+- Deploy via Vercel, Netlify, or Cloudflare Pages with environment variable `VITE_GEMINI_API_KEY`
+- Test the deployed preview build before the presentation to ensure client-side routing and fallback telemetry perform smoothly

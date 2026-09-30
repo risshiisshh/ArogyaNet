@@ -5,29 +5,29 @@
 
 ## 1. Architecture Overview
 
-For the hackathon MVP, the "backend" is intentionally lightweight:
+For the hackathon MVP, ArogyaNet is designed as a streamlined, client-driven React SPA with deterministic resilience rules and direct or proxied Gemini AI inference:
 
 ```
-[ Frontend (Next.js / Streamlit) ]
+[ Frontend (React + Vite + TypeScript SPA) ]
         |
-        | reads
+        | reads / syncs
         v
-[ Static Dataset (JSON/CSV) ]
+[ Typed Static Telemetry Dataset (JSON/Data Modules) ]
         |
-        | sends computed summaries
+        | sends computed telemetry summaries
         v
-[ Gemini API (Google AI Studio) ]
+[ Gemini API (Google AI Studio / @google/genai) ]
         |
-        | returns natural-language alerts & recommendations
+        | returns natural-language alerts, routes & recommendations
         v
-[ Frontend renders results ]
+[ React View Layer renders interactive cards & maps ]
 ```
 
-If time allows, a thin backend (Next.js API routes, or a small Flask/FastAPI service) can sit between the frontend and Gemini to keep the API key secure and to pre-process data before sending it to the model. This is recommended over calling Gemini directly from client-side code.
+A lightweight backend service (e.g., Express / FastAPI / Serverless Functions) can optionally sit between the frontend and Gemini to proxy API calls and protect the key. In the client-only mode, the application uses `VITE_GEMINI_API_KEY` with graceful fallback to deterministic operational logic if offline or rate-limited.
 
-## 2. Recommended Minimal Backend (if used)
+## 2. Minimal Backend / Service Layer (Optional)
 
-A small API layer with the following endpoints is sufficient:
+If a proxy API or serverless route layer is deployed:
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
@@ -35,9 +35,9 @@ A small API layer with the following endpoints is sufficient:
 | `/api/phcs/:id` | GET | Return detailed record for one PHC |
 | `/api/alerts` | GET | Compute forecasts, call Gemini, return generated alerts |
 | `/api/recommendations` | GET | Send network state to Gemini, return redistribution suggestions |
-| `/api/ask` *(stretch)* | POST | Accept a free-text question, forward to Gemini with dataset context, return answer |
+| `/api/ask` | POST | Accept a free-text question, forward to Gemini with dataset context, return answer |
 
-This keeps the Gemini API key server-side only, and lets the frontend stay simple.
+When running as a pure React SPA, these operations are encapsulated in modular frontend service modules (`src/services/` and `src/lib/gemini.ts`).
 
 ## 3. Data Schema
 
@@ -144,8 +144,9 @@ Question: "Which PHCs need urgent restocking today?"
 
 ## 7. Environment & Config
 
-```
-GEMINI_API_KEY=your_key_here   # store server-side only, never expose in frontend code
+```bash
+# Vite client environment configuration (.env)
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ## 8. Future Scope (mentioned in pitch, not built for MVP)
